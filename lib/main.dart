@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fitness_app/pages/trainer.dart';
-import 'package:fitness_app/pages/trainersScreen.dart';
+import 'package:fitness_app/pages/newWorkout.dart';
 import 'package:fitness_app/providers/currentState.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: TrainerPage()),
+          home: NewWorkOut()),
     );
   }
 }
