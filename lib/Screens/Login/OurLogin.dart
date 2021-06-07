@@ -17,11 +17,6 @@ class OurLogin extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            // margin: EdgeInsets.only(
-            //   top: 100.0,
-            //   left: 20.0,
-            //   right: 20.0,
-            // ),
             child: Stack(
               children: [
                 Container(
@@ -34,7 +29,7 @@ class OurLogin extends StatelessWidget {
                       )
                   ),
                   width: _width,
-                  height: _height,
+                  height: _height -29,
 
                 ),
                 Container(
@@ -58,7 +53,7 @@ class OurLogin extends StatelessWidget {
                               ),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "Take a MoMeNt 4 urself",
+                                "Take a moment for yourself",
                                 style: MyTextStyle.heading4,
                               ),
                             ),

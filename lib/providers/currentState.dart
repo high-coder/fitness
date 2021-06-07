@@ -1,6 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitness_app/Screens/HomeScreen/homePage.dart';
+import 'package:fitness_app/Screens/Login/newUserDetails.dart';
+import 'package:fitness_app/Screens/Login/verification.dart';
 import 'package:fitness_app/constants/MyColors.dart';
+import 'package:fitness_app/modelss/ourUser.dart';
+import 'package:fitness_app/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +13,7 @@ class CurrentState extends ChangeNotifier{
   Color customColor = MyColors.pureblack;
   bool disableButton = true;
   String _inputText;
+  OurUser currentUser = OurUser();
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
@@ -63,7 +69,7 @@ class CurrentState extends ChangeNotifier{
         (String verificationId, [int forceCodeResent]) async {
       print("the code has been sent to your mobile");
       _verificationId = verificationId;
-      Navigator.pushNamed(context, "/verify");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> Verification()));
 
       // Here we have to navigate the user to the otp entering page
       // Navigator.of(context).push(MaterialPageRoute(
@@ -94,6 +100,7 @@ class CurrentState extends ChangeNotifier{
   }
 
   verifyOtp(String input, context) async {
+    print(input);
     String retVal = "error";
     OurUser _user = OurUser();
     print(input);
@@ -110,12 +117,14 @@ class CurrentState extends ChangeNotifier{
         currentUser.type = "Customer";
 
         retVal = await OurDatabase().createUser(currentUser);
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfileScreen()));
+        // after this send the user to the create page where he might enter his name and option to select trainer
       } else {
         // get the information of the user from the database this already exists
         currentUser = await OurDatabase().getUserInfo(_authResult.user.uid);
         if(currentUser!= null) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, "/homescreen", (route) => false);
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> OurHome()),ModalRoute.withName('/'), );
+
         }
       }
       print("End of the await");
@@ -127,7 +136,7 @@ class CurrentState extends ChangeNotifier{
             context, "/homescreen", (route) => false);
       }
 
-      saveAllData();
+      //saveAllData();
     } catch (e) {
       print(e);
       print("Something went wrong");
@@ -135,7 +144,26 @@ class CurrentState extends ChangeNotifier{
     }
   }
 
+  bool buttonNotActive = false;
+  String buttonValue = "Take Me Home";
+  saveNewUserData(Map<String,dynamic> user) async{
+    String _retVal = "something went wrong";
+    buttonNotActive = true;
+    buttonValue = "home........";
+    notifyListeners();
+    try{
 
+      await OurDatabase().updateUserData(_auth.currentUser.uid, user);
+      _retVal = "success";
+    } catch(E) {
+      buttonValue = "Take me home";
+      buttonNotActive = false;
+    }
+    buttonValue = "Take me home";
+    buttonNotActive = false;
+    notifyListeners();
+    return _retVal;
+  }
 
 
 
