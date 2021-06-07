@@ -1,21 +1,18 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitness_app/modelss/ourUser.dart';
-import 'package:provider/provider.dart';
 
 /// This will the class that will have access to the database
 /// and all other classes will need to send their database related
 /// requests to this class
 
-class OurDatabase{
-
+class OurDatabase {
   //CurrentState _instance = Provider.of(context);
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> createUser(OurUser user) async{
+  Future<String> createUser(OurUser user) async {
     String retVal = "error";
 
-    try{
+    try {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
@@ -28,30 +25,26 @@ class OurDatabase{
     return retVal;
   }
 
-
-
-  Future<String> updateUserData(String uid,Map user) async{
+  Future<String> updateUserData(String uid, Map user) async {
     String retVal = "error";
 
-    try{
+    try {
       await _firestore.collection("users").doc(uid).update(user);
       retVal = "success";
-
-    }catch(e) {
+    } catch (e) {
       print(e);
     }
 
     return retVal;
   }
 
-
-
   Future<OurUser> getUserInfo(String uid) async {
     OurUser retVal = OurUser();
 
-    try{
+    try {
       // this block is running fine
-      DocumentSnapshot _docSnapshot = await _firestore.collection("users").doc(uid).get();
+      DocumentSnapshot _docSnapshot =
+          await _firestore.collection("users").doc(uid).get();
       print("Above the document snapshot data");
       print(_docSnapshot.data());
       print("below the document snapshot data");
@@ -66,13 +59,12 @@ class OurDatabase{
       // retVal.type =  _docSnapshot.data()['type'];
       print(retVal.phone);
       print("Exiting the get user information function now");
-    } catch(e){
+    } catch (e) {
       print("in the catch of the get user info");
       print(e);
     }
     return retVal;
   }
-
 
   // Future<List<OurGarage>> fetchGarages(List ids) async{
   //   List<OurGarage> _data = [];
@@ -254,8 +246,14 @@ class OurDatabase{
   //   );
   // }
 
+  Future createOrder() {}
 
-  Future createOrder() {
+  Future getTrainers() async {
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _firestore.collection('trainer').get();
 
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    return allData;
   }
 }
