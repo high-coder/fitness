@@ -1,14 +1,23 @@
 import 'package:fitness_app/Screens/Login/OurLogin.dart';
+import 'package:fitness_app/Screens/StepsCounterScreen.dart';
+import 'package:fitness_app/modelss/stepsModel.dart';
 import 'package:fitness_app/providers/currentState.dart';
+import 'package:fitness_app/services/loginChecker.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:hive_flutter/hive_flutter.dart';
 import 'Screens/Login/newUserDetails.dart';
+import 'modelss/ourUser.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Hive.initFlutter();
+  Hive.registerAdapter(OurUserHiveGen());
+  Hive.registerAdapter(StepsModelHiveGen());
+  await Hive.openBox<int>('steps');
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -27,9 +36,18 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.deepOrange,
+            textTheme: GoogleFonts.darkerGrotesqueTextTheme(
+              Theme.of(context).textTheme,
+            ),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          home: OurLogin()),
+          darkTheme: ThemeData.dark().copyWith(
+            textTheme: GoogleFonts.darkerGrotesqueTextTheme(
+              Theme.of(context).textTheme,
+            ),
+          ),
+          home: Root()),
     );
   }
 }
