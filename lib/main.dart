@@ -1,7 +1,7 @@
 import 'package:fitness_app/Screens/Login/OurLogin.dart';
 import 'package:fitness_app/Screens/StepsCounterScreen.dart';
-import 'package:fitness_app/models/trainer.dart';
 import 'package:fitness_app/modelss/stepsModel.dart';
+import 'package:fitness_app/pages/newWorkout.dart';
 import 'package:fitness_app/pages/trainersScreen.dart';
 import 'package:fitness_app/providers/currentState.dart';
 import 'package:fitness_app/services/loginChecker.dart';
@@ -37,19 +37,19 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          // theme: ThemeData(
-          //   primarySwatch: Colors.deepOrange,
-          //   textTheme: GoogleFonts.darkerGrotesqueTextTheme(
-          //     Theme.of(context).textTheme,
-          //   ),
-          //   visualDensity: VisualDensity.adaptivePlatformDensity,
-          // ),
-          // darkTheme: ThemeData.dark().copyWith(
-          //   textTheme: GoogleFonts.darkerGrotesqueTextTheme(
-          //     Theme.of(context).textTheme,
-          //   ),
-          // ),
-          home: Root()),
+          theme: ThemeData(
+            primarySwatch: Colors.deepOrange,
+            textTheme: GoogleFonts.darkerGrotesqueTextTheme(
+              Theme.of(context).textTheme,
+            ),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          darkTheme: ThemeData.dark().copyWith(
+            textTheme: GoogleFonts.darkerGrotesqueTextTheme(
+              Theme.of(context).textTheme,
+            ),
+          ),
+          home: NewWorkOut()),
     );
   }
 }
