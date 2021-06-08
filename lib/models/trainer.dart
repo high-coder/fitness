@@ -1,18 +1,28 @@
-class TrainerModel {
-  final String trainerName;
-  final String trainerDesc;
-  final List workouts;
-  TrainerModel({this.trainerName, this.trainerDesc, this.workouts});
+class ExerciseModel {
+  final String exerciseName;
+  final String exerciseDesc;
 
+  final String exerciseType;
+  final String rounds;
+  final String sets;
+  final String image;
 
+  ExerciseModel(
+      {this.image,
+      this.exerciseType,
+      this.exerciseName,
+      this.exerciseDesc,
+      this.rounds,
+      this.sets});
 
-  Map<String,dynamic> toMap() {
+  Map<String, dynamic> toMap() {
     return {
-      'trainerName' :trainerName,
-      'trainerDesc':trainerDesc,
-
+      'image': image,
+      'exerciseName': exerciseName,
+      'exerciseType': exerciseType,
+      'exerciseDesc': exerciseDesc,
+      'rounds': rounds,
+      'sets': sets
     };
   }
-
-
 }

@@ -256,4 +256,10 @@ class OurDatabase {
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
     return allData;
   }
+
+  AddWorkout(Map workout) {
+    _firestore.collection('trainer').doc('N4kNM5BBVUpC96B25hB0').update({
+      'workouts': FieldValue.arrayUnion([workout])
+    });
+  }
 }
