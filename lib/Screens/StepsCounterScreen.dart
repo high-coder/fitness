@@ -8,6 +8,8 @@ import 'dart:async';
 import 'package:pedometer/pedometer.dart';
 import 'package:provider/provider.dart';
 
+import 'StepsPage/bars.dart';
+
 String formatDate(DateTime d) {
   return d.toString().substring(0, 19);
 }
@@ -97,7 +99,7 @@ class _StepsState extends State<Steps> {
                   ),
 
                   TextButton(onPressed: () {
-////                    Navigator
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => BarChartSample3()));
                   }, child: Text("History")),
 
                   Container(
