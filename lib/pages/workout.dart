@@ -1,50 +1,53 @@
-import 'package:fitness_app/pages/trainer.dart';
-import 'package:fitness_app/services/database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class TrainerPage extends StatefulWidget {
-  const TrainerPage({Key key}) : super(key: key);
+class WorkoutPage extends StatefulWidget {
+  const WorkoutPage({Key key, this.data}) : super(key: key);
+  final data;
 
   @override
-  _TrainerPageState createState() => _TrainerPageState();
+  _WorkoutPageState createState() => _WorkoutPageState();
 }
 
-class _TrainerPageState extends State<TrainerPage> {
-  OurDatabase database = new OurDatabase();
-
-  List trainerList = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    database.getTrainers().then((value) => setState(() => trainerList = value));
-    super.initState();
-  }
-
+class _WorkoutPageState extends State<WorkoutPage> {
   @override
   Widget build(BuildContext context) {
+    print(widget.data['exercises']);
+    List exercise = widget.data['exercises'];
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                child: Text('Explore Trainers'),
-                margin: EdgeInsets.only(top: 12, bottom: 12),
+                // decoration: BoxDecoration(color: Colors.red),
+                height: size.height * 0.4,
+                child: SvgPicture.asset("assets/Yoga.svg"),
+              ),
+              Container(
+                height: size.height * 0.2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(widget.data['name']),
+                    Text('20 - 30 min'),
+                    Icon(Icons.play_arrow_sharp)
+                  ],
+                ),
               ),
               ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: trainerList.length,
+                itemCount: exercise.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      print(trainerList[index]);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              Trainer(data: trainerList[index])));
+                      print(exercise[index]);
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         Trainer(data: trainerList[index])));
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 25),
@@ -58,11 +61,11 @@ class _TrainerPageState extends State<TrainerPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.asset('assets/trainer.png'),
+                          Image.network(exercise[index]['image']),
                           Column(
                             children: [
-                              Text(trainerList[index]['name']),
-                              Text(trainerList[index]['desc'])
+                              Text(exercise[index]['name']),
+                              Text(exercise[index]['desc'])
                             ],
                           ),
                         ],
