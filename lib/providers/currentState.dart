@@ -21,6 +21,8 @@ class CurrentState extends ChangeNotifier{
   String _inputText;
   OurUser currentUser = OurUser();
 
+
+  int selected = 0;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
 
@@ -313,9 +315,14 @@ class CurrentState extends ChangeNotifier{
       }
     else {
       if((DateTime.now().year == currentUser.steps[0].date.year) && (DateTime.now().month == currentUser.steps[0].date.month) && (DateTime.now().day == currentUser.steps[0].date.day)) {
+        print("this is the same day man");
+        print(currentUser.steps.length);
         currentUser.steps[0].steps = int.parse(steps);
         currentUser.steps[0].calories =  0.03 * int.parse(steps);
       } else {
+        print("its a new day its a new life and i am feeling good");
+        print(currentUser.steps.length);
+
         currentUser.steps.insert(0, StepsModel(
           steps: int.parse(steps),
           date: DateTime.now(),
@@ -325,6 +332,7 @@ class CurrentState extends ChangeNotifier{
     }
     //});
     stepsBox.put(todayDayNo, int.parse(steps));
+    UserData.put("user", currentUser);
     //return status; // this is your daily steps value.
 
 
@@ -383,8 +391,14 @@ class CurrentState extends ChangeNotifier{
       print(e);
       // the user is not logged in
     }
-    initPlatformState();
 
     return _retVal;
   }
+
+  updateBottomNavigation(int index) {
+    selected = index;
+    notifyListeners();
+  }
+
+
 }
