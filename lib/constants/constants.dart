@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-  List<Color> colors = [Color(0xffC043C0), Color(0xff8DDCDC), Color(0xffDA0EAE)];
+  List<Color> colors = [ Color(0xff19dee5), Color(0xff7574F1),Color(0xff19dee5), Color(0xff7574F1)];
   List<double> stops = [-10, 5,1];
 

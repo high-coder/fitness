@@ -54,10 +54,7 @@ class BarChartSample3State extends State<BarChartSample3> {
                     fontSize: 14),
                 margin: 20,
                 getTitles: (double value) {
-
-
                   switch (value.toInt()) {
-
                     case 0:
                       return 'Mn';
                     case 1:
