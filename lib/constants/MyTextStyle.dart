@@ -218,8 +218,8 @@ class MyTextStyle {
   );
   static const TextStyle buttontext2 = TextStyle(
     fontSize: 16.0,
-    fontWeight: FontWeight.w600,
-    color: MyColors.text2,
+    fontWeight: FontWeight.w200,
+    color: MyColors.black_light_01,
     fontFamily: 'Poppins',
   );
 

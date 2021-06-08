@@ -209,7 +209,7 @@ class _OurHomeState extends State<OurHome> {
                                   colors: colors,
                                   //stops: stops
                                 ),
-                                value: _instance.currentUser.steps.isNotEmpty ? _instance.currentUser.steps[0].steps/ 10000 * 100 : 1,
+                                value: _instance.currentUser.steps.isNotEmpty ? (_instance.currentUser.steps[0].steps/ 10000 * 100).toDouble() : 1.00,
                                 width: 0.03,
                                 sizeUnit: GaugeSizeUnit.factor,
                                 enableAnimation: true,
@@ -239,14 +239,15 @@ class _OurHomeState extends State<OurHome> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          child: Text("goal"),
+                                          child: Text("goal", style: MyTextStyle.referEarnText,),
                                         ),
                                         Container(
-                                          child: Text("10000"),
+                                          child: Text("10000", style: MyTextStyle.buttontext2,),
                                         ),
                                         Row(
                                           children: [
-                                            Text(_instance.currentUser.steps[0].calories.toString()),
+                                            Text(_instance.currentUser.steps.isNotEmpty ? _instance.currentUser.steps[0].calories.toStringAsFixed(2) : " ", style:
+                                              MyTextStyle.buttontext2,),
                                             Image.asset("assets/calories.png", width: 20,),
                                           ],
                                         ),
