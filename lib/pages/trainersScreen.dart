@@ -25,14 +25,41 @@ class _TrainerPageState extends State<TrainerPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: Icon(
+          Icons.arrow_back_ios_outlined,
+          color: Colors.black45,
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                child: Text('Explore Trainers'),
+                padding: EdgeInsets.only(left: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Find Your',
+                      style: TextStyle(color: Color(0xff363491), fontSize: 30),
+                    ),
+                    Text(
+                      'Favorite Workouts',
+                      style: TextStyle(
+                          color: Color(0xff363491),
+                          fontSize: 30,
+                          fontWeight: FontWeight.w800),
+                    ),
+                  ],
+                ),
                 margin: EdgeInsets.only(top: 12, bottom: 12),
+              ),
+              SizedBox(
+                height: 30,
               ),
               ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
@@ -50,7 +77,8 @@ class _TrainerPageState extends State<TrainerPage> {
                       margin: EdgeInsets.symmetric(horizontal: 25),
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          color: Colors.red,
+                          image: DecorationImage(
+                              image: AssetImage('assets/yoga.png')),
                           borderRadius: BorderRadius.circular(10)),
                       height: size.height * 0.2,
                       width: size.width * 0.8,
