@@ -1,3 +1,4 @@
+import 'package:fitness_app/modelss/caloriesTrackerModel.dart';
 import 'package:fitness_app/modelss/stepsModel.dart';
 import 'package:hive/hive.dart';
 
@@ -26,7 +27,21 @@ class OurUser{
 
   @HiveField(6)
   List<StepsModel> steps = [];
-  OurUser({this.phone,this.name,this.type,this.uid, this.dob,this.gender,this.steps});
+
+  @HiveField(7)
+  List calories = [];
+
+  @HiveField(8)
+  List localCourses = [];
+
+  @HiveField(9)
+  List purchasedCourses = [];
+
+
+  @HiveField(10)
+  List<CaloriesTracker> caloriesList = [];
+
+  OurUser({this.phone,this.name,this.type,this.uid, this.dob,this.gender,this.steps, this.calories,this.localCourses,this.purchasedCourses, this.caloriesList});
 
 
   Map<String, dynamic> toMap() {
@@ -37,7 +52,11 @@ class OurUser{
       //'email':email,
       'type':type,
       'dob':dob,
-      'steps':steps
+      'steps':steps,
+      'calories':calories,
+      'localCourses':localCourses,
+      'purchasedCourses':purchasedCourses,
+      'caloriesList':caloriesList
     };
   }
 
@@ -53,7 +72,11 @@ class OurUser{
       name: json['fullName'],
       gender: json['gender'],
       dob: json['dob'] != null ? json['dob'].toDate() : json['dob'],
-      steps: json['steps']
+      steps: json['steps'],
+      calories: json['calories'],
+      localCourses: json['localCourses'],
+      purchasedCourses: json["purchasedCourses"],
+      caloriesList: json['caloriesList']
     );
   }
 }

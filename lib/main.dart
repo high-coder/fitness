@@ -1,9 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fitness_app/Screens/Login/OurLogin.dart';
+import 'package:fitness_app/modelss/caloriesTrackerModel.dart';
 import 'package:fitness_app/modelss/stepsModel.dart';
 import 'package:fitness_app/pages/newWorkout.dart';
 import 'package:fitness_app/pages/nutrition.dart';
+import 'package:fitness_app/pages/trainer.dart';
 import 'package:fitness_app/pages/trainersScreen.dart';
 import 'package:fitness_app/providers/currentState.dart';
+import 'package:fitness_app/services/loginChecker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -17,6 +21,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(OurUserHiveGen());
   Hive.registerAdapter(StepsModelHiveGen());
+  Hive.registerAdapter(CaloriesTrackerHiveGen());
   await Hive.openBox<int>('steps');
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -42,12 +47,12 @@ class MyApp extends StatelessWidget {
             ),
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          darkTheme: ThemeData.dark().copyWith(
-            textTheme: GoogleFonts.darkerGrotesqueTextTheme(
-              Theme.of(context).textTheme,
-            ),
-          ),
-          home: NutritionScreen()),
+          // darkTheme: ThemeData.dark().copyWith(
+          //   textTheme: GoogleFonts.darkerGrotesqueTextTheme(
+          //     Theme.of(context).textTheme,
+          //   ),
+          // ),
+          home: Root()),
     );
   }
 }

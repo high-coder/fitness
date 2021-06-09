@@ -6,6 +6,7 @@ import 'package:fitness_app/Screens/HomeScreen/homePage.dart';
 import 'package:fitness_app/Screens/Login/newUserDetails.dart';
 import 'package:fitness_app/Screens/Login/verification.dart';
 import 'package:fitness_app/constants/MyColors.dart';
+import 'package:fitness_app/modelss/caloriesTrackerModel.dart';
 import 'package:fitness_app/modelss/ourUser.dart';
 import 'package:fitness_app/modelss/stepsModel.dart';
 import 'package:fitness_app/services/database.dart';
@@ -126,6 +127,11 @@ class CurrentState extends ChangeNotifier{
         currentUser.phone = _inputText;
         currentUser.type = "Customer";
         currentUser.steps = [];
+        currentUser.purchasedCourses = [];
+        currentUser.localCourses = [];
+        currentUser.calories = [];
+        currentUser.caloriesList = [];
+
         retVal = await OurDatabase().createUser(currentUser);
         Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfileScreen()));
         // after this send the user to the create page where he might enter his name and option to select trainer
@@ -134,7 +140,16 @@ class CurrentState extends ChangeNotifier{
         currentUser = await OurDatabase().getUserInfo(_authResult.user.uid);
         if(currentUser.steps == null) {
           currentUser.steps =[];
+        } if(currentUser.calories == null) {
+          currentUser.calories = [];
+        } if(currentUser.purchasedCourses == null) {
+          currentUser.purchasedCourses = [];
+        }if(currentUser.localCourses == null) {
+          currentUser.localCourses = [];
+        } if(currentUser.caloriesList == null) {
+          currentUser.caloriesList = [];
         }
+
         UserData.put("user", currentUser);
         if(currentUser!= null) {
           Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> OurHome()),ModalRoute.withName('/'), );
@@ -401,4 +416,29 @@ class CurrentState extends ChangeNotifier{
   }
 
 
+
+  saveCaloriesLocally(List data) {
+
+    if(currentUser.caloriesList.isEmpty) {
+      currentUser.caloriesList.insert(0, CaloriesTracker(
+        date: DateTime.now(),
+        caloriesData: data
+      ));
+    }
+    else {
+      if((DateTime.now().year == currentUser.caloriesList[0].date.year) && (DateTime.now().month == currentUser.caloriesList[0].date.month) && (DateTime.now().day == currentUser.caloriesList[0].date.day)) {
+
+        currentUser.caloriesList[0].caloriesData = data;
+      } else {
+        print("its a new day its a new life and i am feeling good");
+        print(currentUser.steps.length);
+
+        currentUser.caloriesList.insert(0, CaloriesTracker(
+            date: DateTime.now(),
+            caloriesData: data
+        ));
+      }
+    }
+    UserData.put("user", currentUser);
+  }
 }

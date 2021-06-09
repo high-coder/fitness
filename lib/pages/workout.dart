@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutPage extends StatefulWidget {
@@ -84,32 +85,41 @@ class _WorkoutPageState extends State<WorkoutPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                exercise[index]['name'],
-                                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                exercise[index]['type'],
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                exercise[index]['desc'],
-                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                'Rounds ${exercise[index]['repetition']} | Sets ${exercise[index]['set']}',
-                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
-                              ),
-                            ],
+                          Expanded(
+                            flex:2,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                AutoSizeText(
+                                  exercise[index]['name'],
+                                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                                  maxLines: 2,
+                                ),
+                                Text(
+                                  exercise[index]['type'],
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  exercise[index]['desc'],
+                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  'Rounds ${exercise[index]['repetition']} | Sets ${exercise[index]['set']}',
+                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
                           ),
                           if (exercise[index]['image'] == null)
-                            Expanded(child: Image.asset('assets/equipment.png'))
+                            Expanded(
+                              flex:2,
+                                child: Image.asset('assets/equipment.png')
+                            )
                           else
-                            Expanded(child: Image.network(exercise[index]['image'])),
+                            Expanded(
+                                flex:2,
+                                child: Image.network(exercise[index]['image'])),
                         ],
                       ),
                     ),

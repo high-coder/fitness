@@ -24,13 +24,17 @@ class OurUserHiveGen extends TypeAdapter<OurUser> {
       dob: fields[5] as DateTime,
       gender: fields[4] as String,
       steps: (fields[6] as List)?.cast<StepsModel>(),
+      calories: (fields[7] as List)?.cast<dynamic>(),
+      localCourses: (fields[8] as List)?.cast<dynamic>(),
+      purchasedCourses: (fields[9] as List)?.cast<dynamic>(),
+      caloriesList: (fields[10] as List)?.cast<CaloriesTracker>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, OurUser obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.uid)
       ..writeByte(1)
@@ -44,7 +48,15 @@ class OurUserHiveGen extends TypeAdapter<OurUser> {
       ..writeByte(5)
       ..write(obj.dob)
       ..writeByte(6)
-      ..write(obj.steps);
+      ..write(obj.steps)
+      ..writeByte(7)
+      ..write(obj.calories)
+      ..writeByte(8)
+      ..write(obj.localCourses)
+      ..writeByte(9)
+      ..write(obj.purchasedCourses)
+      ..writeByte(10)
+      ..write(obj.caloriesList);
   }
 
   @override
