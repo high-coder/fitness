@@ -24,9 +24,14 @@ class _WorkoutPageState extends State<WorkoutPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: Icon(
-          Icons.arrow_back_ios_outlined,
-          color: Colors.black45,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_outlined,
+            color: Colors.black45,
+          ),
         ),
       ),
       body: SafeArea(

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fitness_app/pages/workout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +22,14 @@ class _TrainerState extends State<Trainer> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: Icon(
-          Icons.arrow_back_ios_outlined,
-          color: Colors.black45,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_outlined,
+            color: Colors.black45,
+          ),
         ),
       ),
       body: SafeArea(
@@ -35,7 +42,8 @@ class _TrainerState extends State<Trainer> {
                 height: size.height * 0.4,
                 width: size.width,
                 decoration: BoxDecoration(
-                    color: Colors.amber,
+                    color: Colors
+                        .primaries[Random().nextInt(Colors.primaries.length)],
                     borderRadius:
                         BorderRadius.only(bottomRight: Radius.circular(50))),
                 child: Image.asset(
@@ -101,7 +109,8 @@ class _TrainerState extends State<Trainer> {
                           margin: EdgeInsets.symmetric(horizontal: 25),
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                              color: Color(0xb0891f90),
+                              color: Colors.primaries[
+                                  Random().nextInt(Colors.primaries.length)],
                               image: DecorationImage(
                                   image: AssetImage('assets/yoga.png'),
                                   fit: BoxFit.cover),
