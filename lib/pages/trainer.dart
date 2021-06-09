@@ -14,11 +14,17 @@ class Trainer extends StatefulWidget {
 class _TrainerState extends State<Trainer> {
   @override
   Widget build(BuildContext context) {
-    print(widget.data);
-
     Size size = MediaQuery.of(context).size;
     List workouts = widget.data['workouts'];
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: Icon(
+          Icons.arrow_back_ios_outlined,
+          color: Colors.black45,
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

@@ -23,7 +23,6 @@ class _TrainerPageState extends State<TrainerPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(trainerList[0]);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
