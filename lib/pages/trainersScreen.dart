@@ -23,6 +23,7 @@ class _TrainerPageState extends State<TrainerPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(trainerList[0]);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +49,7 @@ class _TrainerPageState extends State<TrainerPage> {
                       style: TextStyle(color: Color(0xff363491), fontSize: 30),
                     ),
                     Text(
-                      'Favorite Workouts',
+                      'Favorite Trainer',
                       style: TextStyle(
                           color: Color(0xff363491),
                           fontSize: 30,
@@ -75,22 +76,60 @@ class _TrainerPageState extends State<TrainerPage> {
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 25),
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
+                          color: Color(0xb0891f90),
                           image: DecorationImage(
-                              image: AssetImage('assets/yoga.png')),
+                              image: AssetImage('assets/yoga.png'),
+                              fit: BoxFit.cover),
                           borderRadius: BorderRadius.circular(10)),
-                      height: size.height * 0.2,
+                      height: size.height * 0.25,
                       width: size.width * 0.8,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Image.asset('assets/trainer.png'),
                           Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(trainerList[index]['name']),
-                              Text(trainerList[index]['desc'])
+                              Text(
+                                trainerList[index]['name'],
+                                style: TextStyle(
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white),
+                              ),
+                              Text(
+                                trainerList[index]['desc'],
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              SizedBox(
+                                height: 6,
+                              ),
+                              Container(
+                                child: Column(
+                                  children: [
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      WidgetSpan(
+                                          child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                              child: Icon(Icons.handyman))),
+                                      TextSpan(
+                                        text: trainerList[index]['workouts'] ==
+                                                null
+                                            ? '0 Workouts'
+                                            : '${trainerList[index]['workouts'].length} Workouts',
+                                      ),
+                                    ])),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ],
