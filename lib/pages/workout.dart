@@ -73,11 +73,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
                       //         Trainer(data: trainerList[index])));
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 25),
+                      margin: EdgeInsets.only(top: 10, right: 25, bottom: 10, left: 25),
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          color: Colors.primaries[
-                              Random().nextInt(Colors.primaries.length)],
+                          color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
                           borderRadius: BorderRadius.circular(10)),
                       height: size.height * 0.2,
                       width: size.width * 0.8,
@@ -91,27 +90,26 @@ class _WorkoutPageState extends State<WorkoutPage> {
                             children: [
                               Text(
                                 exercise[index]['name'],
-                                style: TextStyle(
-                                    fontSize: 22, fontWeight: FontWeight.w600),
+                                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
                               ),
                               Text(
                                 exercise[index]['type'],
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w600),
+                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                               ),
                               Text(
                                 exercise[index]['desc'],
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w600),
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                               ),
                               Text(
                                 'Rounds ${exercise[index]['repetition']} | Sets ${exercise[index]['set']}',
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w600),
+                                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
                               ),
                             ],
                           ),
-                          Image.network(exercise[index]['image']),
+                          if (exercise[index]['image'] == null)
+                            Expanded(child: Image.asset('assets/equipment.png'))
+                          else
+                            Expanded(child: Image.network(exercise[index]['image'])),
                         ],
                       ),
                     ),

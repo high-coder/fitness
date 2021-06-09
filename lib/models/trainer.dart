@@ -7,22 +7,16 @@ class ExerciseModel {
   final String sets;
   final String image;
 
-  ExerciseModel(
-      {this.image,
-      this.exerciseType,
-      this.exerciseName,
-      this.exerciseDesc,
-      this.rounds,
-      this.sets});
+  ExerciseModel({this.image, this.exerciseType, this.exerciseName, this.exerciseDesc, this.rounds, this.sets});
 
   Map<String, dynamic> toMap() {
     return {
       'image': image,
-      'exerciseName': exerciseName,
-      'exerciseType': exerciseType,
-      'exerciseDesc': exerciseDesc,
-      'rounds': rounds,
-      'sets': sets
+      'name': exerciseName,
+      'type': exerciseType,
+      'desc': exerciseDesc,
+      'repetition': rounds,
+      'set': sets
     };
   }
 }

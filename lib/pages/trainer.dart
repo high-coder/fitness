@@ -42,37 +42,37 @@ class _TrainerState extends State<Trainer> {
                 height: size.height * 0.4,
                 width: size.width,
                 decoration: BoxDecoration(
-                    color: Colors
-                        .primaries[Random().nextInt(Colors.primaries.length)],
-                    borderRadius:
-                        BorderRadius.only(bottomRight: Radius.circular(50))),
+                    color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                    borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))),
                 child: Image.asset(
                   'assets/yoga.png',
                   fit: BoxFit.cover,
                 ),
               ),
               Container(
+                margin: EdgeInsets.symmetric(vertical: 30),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       widget.data['name'],
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: 0,
                     ),
                     Text(
-                      '30 min',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                      '2 min Exercises',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: 0,
                     ),
-                    Text(widget.data['desc']),
+                    Text(
+                      widget.data['desc'],
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                    ),
                   ],
                 ),
               ),
@@ -91,8 +91,7 @@ class _TrainerState extends State<Trainer> {
                       ],
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(40),
-                          topRight: Radius.circular(40))),
+                          topLeft: Radius.circular(40), topRight: Radius.circular(40))),
                   child: ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -102,18 +101,15 @@ class _TrainerState extends State<Trainer> {
                         onTap: () {
                           print(workouts[index]);
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  WorkoutPage(data: workouts[index])));
+                              builder: (context) => WorkoutPage(data: workouts[index])));
                         },
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 25),
+                          margin: EdgeInsets.only(top: 10, right: 25, bottom: 10, left: 25),
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                              color: Colors.primaries[
-                                  Random().nextInt(Colors.primaries.length)],
+                              color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
                               image: DecorationImage(
-                                  image: AssetImage('assets/yoga.png'),
-                                  fit: BoxFit.cover),
+                                  image: AssetImage('assets/yoga.png'), fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(10)),
                           height: size.height * 0.25,
                           width: size.width * 0.8,
@@ -149,34 +145,26 @@ class _TrainerState extends State<Trainer> {
                                             text: TextSpan(children: [
                                           WidgetSpan(
                                               child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 5),
+                                                  padding: EdgeInsets.symmetric(horizontal: 5),
                                                   child: Icon(Icons.handyman))),
-                                          TextSpan(
-                                              text: workouts[index]
-                                                  ['equipment']),
+                                          TextSpan(text: workouts[index]['equipment']),
                                         ])),
                                         RichText(
                                             text: TextSpan(children: [
                                           WidgetSpan(
                                               child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 5),
+                                                  padding: EdgeInsets.symmetric(horizontal: 5),
                                                   child: Icon(Icons.handyman))),
-                                          TextSpan(
-                                              text: workouts[index]['level']),
+                                          TextSpan(text: workouts[index]['level']),
                                         ])),
                                         RichText(
                                             text: TextSpan(children: [
                                           WidgetSpan(
                                               child: Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 5),
+                                                  padding: EdgeInsets.symmetric(horizontal: 5),
                                                   child: Icon(Icons.handyman))),
                                           TextSpan(
-                                            text: workouts[index]
-                                                        ['exercises'] ==
-                                                    null
+                                            text: workouts[index]['exercises'] == null
                                                 ? '0 Workouts'
                                                 : '${workouts[index]['exercises'].length} Exercises',
                                           ),
@@ -190,14 +178,12 @@ class _TrainerState extends State<Trainer> {
                                 onPressed: null,
                                 child: Text('Buy'),
                                 style: ButtonStyle(
-                                    minimumSize:
-                                        MaterialStateProperty.all<Size>(
-                                            Size(size.width * 0.25, 20)),
-                                    shape: MaterialStateProperty.all<
-                                        StadiumBorder>(StadiumBorder()),
+                                    minimumSize: MaterialStateProperty.all<Size>(
+                                        Size(size.width * 0.25, 20)),
+                                    shape:
+                                        MaterialStateProperty.all<StadiumBorder>(StadiumBorder()),
                                     backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.blueAccent)),
+                                        MaterialStateProperty.all<Color>(Colors.blueAccent)),
                               )
                             ],
                           ),
