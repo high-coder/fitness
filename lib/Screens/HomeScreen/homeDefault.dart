@@ -26,10 +26,10 @@ class _MyHomeDefaultState extends State<MyHomeDefault> {
 
     CurrentState _instance = Provider.of<CurrentState>(context, listen: false);
     _instance.currentUser.caloriesList.length == 2
-        ? 0
-        : _instance.currentUser.caloriesList[1].caloriesData.forEach((element) {
+        ? _instance.currentUser.caloriesList[1].caloriesData.forEach((element) {
             totalcal += element['cal'];
-          });
+          })
+        : 0;
   }
 
   @override
