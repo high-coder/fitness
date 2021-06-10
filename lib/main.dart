@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fitness_app/Screens/Login/OurLogin.dart';
 import 'package:fitness_app/modelss/caloriesTrackerModel.dart';
 import 'package:fitness_app/modelss/stepsModel.dart';
 import 'package:fitness_app/pages/newWorkout.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
           //     Theme.of(context).textTheme,
           //   ),
           // ),
-          home: TrainerPage()),
+          home: OurLogin()),
     );
   }
 }
