@@ -1,11 +1,6 @@
 import 'package:fitness_app/providers/currentState.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive/hive.dart';
-import 'package:jiffy/jiffy.dart';
-import 'dart:async';
-
-import 'package:pedometer/pedometer.dart';
 import 'package:provider/provider.dart';
 
 import 'StepsPage/bars.dart';
@@ -14,16 +9,12 @@ String formatDate(DateTime d) {
   return d.toString().substring(0, 19);
 }
 
-
-
 class Steps extends StatefulWidget {
   @override
   _StepsState createState() => _StepsState();
 }
 
 class _StepsState extends State<Steps> {
-
-
   @override
   void initState() {
     super.initState();
@@ -31,30 +22,27 @@ class _StepsState extends State<Steps> {
     // _instance.initPlatformState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    CurrentState _instance = Provider.of(context,listen:false);
+    CurrentState _instance = Provider.of(context, listen: false);
 
-    return
-       Scaffold(
-        appBar: AppBar(
-          title: const Text('Steps Counter'),
-        ),
-        body: Center(
-          child: Consumer<CurrentState>(
-            builder: (context,_,__) {
-              return Column(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Steps Counter'),
+      ),
+      body: Center(
+        child: Consumer<CurrentState>(
+          builder: (context, _, __) {
+            return SingleChildScrollView(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Consumer<CurrentState>(
-                    builder: (context,_,__) {
+                    builder: (context, _, __) {
                       return Card(
                         color: Colors.black87.withOpacity(0.7),
                         elevation: 3,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         child: Container(
                           margin: const EdgeInsets.only(
                             top: 10,
@@ -83,7 +71,7 @@ class _StepsState extends State<Steps> {
                                 ),
                               ),
                               Text(
-                                "Calories : ${_instance.currentUser.steps[0].calories.toStringAsFixed(2)}",
+                                "Calories : ${_instance.currentUser.steps.length == 0 ? '0' : _instance.currentUser.steps[0].calories.toStringAsFixed(2)}",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 28,
@@ -95,12 +83,15 @@ class _StepsState extends State<Steps> {
                         ),
                       );
                     },
-                  //  child: ,
+                    //  child: ,
                   ),
 
-                  TextButton(onPressed: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => BarChartSample3()));
-                  }, child: Text("History")),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (context) => BarChartSample3()));
+                      },
+                      child: Text("History")),
 
                   Container(
                     height: 300,
@@ -108,12 +99,11 @@ class _StepsState extends State<Steps> {
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       itemCount: _instance.currentUser.steps.length,
-                      itemBuilder: (BuildContext context,index) {
+                      itemBuilder: (BuildContext context, index) {
                         return Card(
                           color: Colors.black87.withOpacity(0.7),
                           elevation: 3,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           child: Container(
                             margin: const EdgeInsets.only(
                               top: 10,
@@ -123,7 +113,6 @@ class _StepsState extends State<Steps> {
                             ),
                             child: Column(
                               children: <Widget>[
-
                                 Text(
                                   "Date : ${_instance.currentUser.steps[index].date.day}-${_instance.currentUser.steps[index].date.month}-${_instance.currentUser.steps[index].date.year}",
                                   style: TextStyle(
@@ -190,17 +179,15 @@ class _StepsState extends State<Steps> {
                   //         : TextStyle(fontSize: 20, color: Colors.red),
                   //   ),
                   // )
-
                 ],
-              );
-            },
-            //child: ,
-          ),
+              ),
+            );
+          },
+          //child: ,
         ),
-      );
-
+      ),
+    );
   }
-
 
   Widget gradientShaderMask({@required Widget child}) {
     return ShaderMask(

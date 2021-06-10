@@ -25,6 +25,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
   double totalNutrition = 0;
 
   double totalCals = 0;
+
   Future getNut(String nut) async {
     var cal;
     await dio.get(
@@ -44,15 +45,14 @@ class _NutritionScreenState extends State<NutritionScreen> {
     // TODO: implement initState
     super.initState();
     CurrentState _instance = Provider.of<CurrentState>(context, listen: false);
-    if(_instance.currentUser.caloriesList.isNotEmpty) {
+    if (_instance.currentUser.caloriesList.isNotEmpty) {
       nutrition = _instance.currentUser.caloriesList[0].caloriesData;
+
       totalCals = 0;
       _instance.currentUser.caloriesList[0].caloriesData.forEach((element) {
         totalCals += element["cal"];
       });
-      setState(() {
-
-      });
+      setState(() {});
     }
   }
 
@@ -60,6 +60,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
   Widget build(BuildContext context) {
     CurrentState _instance = Provider.of<CurrentState>(context, listen: false);
     print(_instance.currentUser.steps.length);
+    print(_instance.currentUser.caloriesList[0].caloriesData);
     Size size = MediaQuery.of(context).size;
 
     print(nutrition);
@@ -71,8 +72,6 @@ class _NutritionScreenState extends State<NutritionScreen> {
             key: _key,
             child: Column(
               children: [
-
-
                 Stack(
                   children: [
                     Center(
@@ -94,7 +93,6 @@ class _NutritionScreenState extends State<NutritionScreen> {
                         width: 250,
                       ),
                     ),
-
                     Center(
                       child: Column(
                         children: [
@@ -143,33 +141,28 @@ class _NutritionScreenState extends State<NutritionScreen> {
                                       GaugeAnnotation(
                                           widget: Container(
                                               child: Text(
-                                                totalCals.toStringAsFixed(1),
-                                                style: GoogleFonts.darkerGrotesque(
-                                                  fontSize: 80,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w100,
-                                                ),
-                                              )),
+                                            totalCals.toStringAsFixed(1),
+                                            style: GoogleFonts.darkerGrotesque(
+                                              fontSize: 80,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w100,
+                                            ),
+                                          )),
                                           angle: 90,
                                           positionFactor: 0.0),
                                       GaugeAnnotation(
                                           widget: Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               Column(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
                                                   Container(
                                                     child: Text(
                                                       "goal",
-                                                      style:
-                                                      MyTextStyle.referEarnText,
+                                                      style: MyTextStyle.referEarnText,
                                                     ),
                                                   ),
                                                   Container(
@@ -182,8 +175,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
                                                     children: [
                                                       Text(
                                                         totalCals.toString(),
-                                                        style:
-                                                        MyTextStyle.buttontext2,
+                                                        style: MyTextStyle.buttontext2,
                                                       ),
                                                       Image.asset(
                                                         "assets/calories.png",
@@ -204,7 +196,6 @@ class _NutritionScreenState extends State<NutritionScreen> {
                             },
                             //child: ,
                           ),
-
                         ],
                       ),
                     ),
@@ -217,8 +208,8 @@ class _NutritionScreenState extends State<NutritionScreen> {
                           child: IconButton(
                             onPressed: () {
                               print("tioehr erohe eofrhe ");
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) => Steps()));
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (context) => Steps()));
                             },
                             icon: Icon(
                               Icons.event,
@@ -231,8 +222,6 @@ class _NutritionScreenState extends State<NutritionScreen> {
                     ),
                   ],
                 ),
-
-
 
                 SizedBox(
                   height: 10,
@@ -279,7 +268,6 @@ class _NutritionScreenState extends State<NutritionScreen> {
                 //       TextStyle(color: Colors.black45, fontSize: 20, fontWeight: FontWeight.w800),
                 // ),
                 //
-
 
                 CustomTextField(controller: _controller, name: 'Enter Food'),
                 SizedBox(
@@ -350,6 +338,50 @@ class _NutritionScreenState extends State<NutritionScreen> {
                         ),
                       );
                     }),
+                Text('Yesterday Nutrients'),
+                _instance.currentUser.caloriesList.length == 2
+                    ? ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: _instance.currentUser.caloriesList[1].caloriesData.length,
+                        itemBuilder: (BuildContext context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(top: 25, right: 20, bottom: 10, left: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                RichText(
+                                  text: TextSpan(children: [
+                                    WidgetSpan(
+                                        child: Container(
+                                      margin: EdgeInsets.symmetric(horizontal: 20),
+                                      child: Icon(
+                                        Icons.circle,
+                                        color: Colors
+                                            .primaries[Random().nextInt(Colors.primaries.length)],
+                                      ),
+                                    )),
+                                    TextSpan(
+                                        text: _instance.currentUser.caloriesList[0]
+                                            .caloriesData[index]['nutrition'],
+                                        style: TextStyle(
+                                            color: Colors.black45,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w800)),
+                                  ]),
+                                ),
+                                Text(
+                                  "${_instance.currentUser.caloriesList[1].caloriesData[index]['cal']} cal's",
+                                  style: TextStyle(
+                                      color: Colors.black45,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w800),
+                                )
+                              ],
+                            ),
+                          );
+                        })
+                    : Text('No Data Available'),
               ],
             ),
           ),
@@ -389,5 +421,19 @@ Container CustomTextField({TextEditingController controller, String name}) {
         ),
       ],
     ),
+  );
+}
+
+Widget gradientShaderMask({@required Widget child}) {
+  return ShaderMask(
+    shaderCallback: (bounds) => LinearGradient(
+      colors: [
+        Colors.orange,
+        Colors.deepOrange.shade900,
+      ],
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+    ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
+    child: child,
   );
 }

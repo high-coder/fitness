@@ -17,6 +17,7 @@ class NewWorkOut extends StatefulWidget {
 
 class _NewWorkOutState extends State<NewWorkOut> {
   OurDatabase ourDatabase = new OurDatabase();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   List ExcerciseData = [];
   Map muscles = {
     'Biceps': 1,
@@ -73,6 +74,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
   TextEditingController _exerciseDesc = new TextEditingController();
   TextEditingController _equipment = new TextEditingController();
   TextEditingController _level = new TextEditingController();
+  TextEditingController _price = new TextEditingController();
   GlobalKey<FormState> _key = new GlobalKey();
   List exercises = [];
   List<String> exercisesName = [];
@@ -86,6 +88,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
     Size size = MediaQuery.of(context).size;
     String image;
     return Scaffold(
+      key: scaffoldKey,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
@@ -104,7 +107,12 @@ class _NewWorkOutState extends State<NewWorkOut> {
                 CustomTextField(controller: _workoutName, name: 'WorkOut Name'),
                 CustomTextField(controller: _workoutDesc, name: 'WorkOut Description'),
                 CustomTextField(controller: _equipment, name: 'Equipment'),
-                CustomTextField(controller: _level, name: 'Level'),
+                Row(
+                  children: [
+                    Expanded(child: CustomTextField(controller: _price, name: 'Price')),
+                    Expanded(child: CustomTextField(controller: _level, name: 'Level')),
+                  ],
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 40, right: 40, top: 20, bottom: 20),
                   child: Text(
@@ -203,30 +211,45 @@ class _NewWorkOutState extends State<NewWorkOut> {
                       ),
                       TextButton(
                         onPressed: () => {
-                          ExcerciseData.forEach((element) {
-                            if (element['name'] == _excerciseName) {
-                              print(_excerciseName);
-                              print(element['id']);
-                              getImage(element['id']).then((value) => image = value);
+                          if (_excerciseName != '' &&
+                              _exerciseDesc.value.text != '' &&
+                              _sets.value.text != '')
+                            {
+                              ExcerciseData.forEach((element) {
+                                if (element['name'] == _excerciseName) {
+                                  print(_excerciseName);
+                                  print(element['id']);
+                                  getImage(element['id']).then((value) => image = value);
+                                }
+                              }),
+                              setState(() {
+                                exercises.add(ExerciseModel(
+                                        image: image,
+                                        exerciseDesc: _exerciseDesc.value.text,
+                                        exerciseName: _excerciseName,
+                                        exerciseType: _excerciseType,
+                                        rounds: _rounds.value.text,
+                                        sets: _sets.value.text)
+                                    .toMap());
+                                exercisesName.clear();
+                                _exerciseDesc.clear();
+                                _sets.clear();
+                                _rounds.clear();
+                                _excerciseName = null;
+                                _excerciseType = 'Chest';
+                              })
                             }
-                          }),
-                          setState(() {
-                            exercises.add(ExerciseModel(
-                                    image: image,
-                                    exerciseDesc: _exerciseDesc.value.text,
-                                    exerciseName: _excerciseName,
-                                    exerciseType: _excerciseType,
-                                    rounds: _rounds.value.text,
-                                    sets: _sets.value.text)
-                                .toMap());
-                            exercisesName.clear();
-                            _exerciseDesc.clear();
-
-                            _sets.clear();
-                            _rounds.clear();
-                            _excerciseName = null;
-                            _excerciseType = 'Chest';
-                          })
+                          else
+                            {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: const Text('Some field are missing'),
+                                duration: const Duration(seconds: 1),
+                                action: SnackBarAction(
+                                  label: '',
+                                  onPressed: () {},
+                                ),
+                              ))
+                            },
                         },
                         child: Text(
                           'Add',
@@ -298,29 +321,52 @@ class _NewWorkOutState extends State<NewWorkOut> {
                 ),
                 TextButton(
                   onPressed: () => {
-                    ourDatabase.getWorkoutList(_instance.currentUser.uid).then(
-                      (value) {
-                        ourDatabase.AddWorkout(uid: _instance.currentUser.uid, workout: {
-                          'name': _workoutName.value.text,
-                          'desc': _workoutDesc.value.text,
-                          'exercises': exercises,
-                          'level': _level.value.text,
-                          'equipment': _equipment.value.text,
-                          'uid': value + 1,
-                          'price': ''
-                        });
+                    if (_price.value.text != '' &&
+                        _workoutName.value.text != '' &&
+                        _equipment.value.text != '' &&
+                        _level.value.text != '' &&
+                        _sets.value.text != '' &&
+                        _workoutDesc.value.text != '')
+                      {
+                        print(_price.value.text),
+                        ourDatabase.getWorkoutList(_instance.currentUser.uid).then(
+                          (value) {
+                            ourDatabase.AddWorkout(uid: _instance.currentUser.uid, workout: {
+                              'name': _workoutName.value.text,
+                              'desc': _workoutDesc.value.text,
+                              'exercises': exercises,
+                              'level': _level.value.text,
+                              'equipment': _equipment.value.text,
+                              'uid': value + 1,
+                              'price': _price.value.text
+                            });
 
-                        return value;
+                            return value;
+                          },
+                        ),
+                        setState(() {
+                          exercises.clear();
+                          _level.clear();
+                          _equipment.clear();
+                          _workoutName.clear();
+                          _workoutDesc.clear();
+                          _price.clear();
+                          exercises.clear();
+                        })
+                      }
+                    else
+                      {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: const Text('Some fields are missing'),
+                          duration: const Duration(seconds: 1),
+                          backgroundColor:
+                              Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                          action: SnackBarAction(
+                            label: '',
+                            onPressed: () {},
+                          ),
+                        ))
                       },
-                    ),
-                    setState(() {
-                      exercises.clear();
-                      _level.clear();
-                      _equipment.clear();
-                      _workoutName.clear();
-                      _workoutDesc.clear();
-                      exercises.clear();
-                    })
                   },
                   child: Text(
                     'Submit',
@@ -381,6 +427,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
     _equipment.dispose();
     _level.dispose();
     _workoutName.dispose();
+    _price.dispose();
     _exerciseDesc.dispose();
     _workoutDesc.dispose();
   }
