@@ -77,7 +77,6 @@ class _NewWorkOutState extends State<NewWorkOut> {
   String _excerciseType = "Chest";
   String _excerciseName;
 
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -182,8 +181,16 @@ class _NewWorkOutState extends State<NewWorkOut> {
                       ),
                       Row(
                         children: [
-                          Expanded(child: CustomTextField(controller: _rounds, name: 'repetition')),
-                          Expanded(child: CustomTextField(controller: _sets, name: 'Sets')),
+                          Expanded(
+                              child: CustomTextField(
+                                  controller: _rounds,
+                                  name: 'repetition',
+                                  inputType: TextInputType.number)),
+                          Expanded(
+                              child: CustomTextField(
+                                  controller: _sets,
+                                  name: 'Sets',
+                                  inputType: TextInputType.number)),
                         ],
                       ),
                       CustomTextField(controller: _exerciseDesc, name: 'Exercise Description'),
@@ -232,7 +239,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
@@ -283,7 +290,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
                       );
                     }),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 TextButton(
                   onPressed: () => {
@@ -331,7 +338,10 @@ class _NewWorkOutState extends State<NewWorkOut> {
     );
   }
 
-  Container CustomTextField({TextEditingController controller, String name}) {
+  Container CustomTextField(
+      {TextEditingController controller,
+      String name,
+      TextInputType inputType = TextInputType.text}) {
     return Container(
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.only(left: 10, right: 30, top: 4),
@@ -344,6 +354,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
             child: TextField(
               controller: controller,
               onChanged: (value) {},
+              keyboardType: inputType,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.play_for_work_sharp),
                   hintText: name,
