@@ -13,10 +13,7 @@ class OurDatabase {
     String retVal = "error";
 
     try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .set(user.toMap());
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set(user.toMap());
 
       retVal = "success";
     } catch (e) {
@@ -43,8 +40,7 @@ class OurDatabase {
 
     try {
       // this block is running fine
-      DocumentSnapshot _docSnapshot =
-          await _firestore.collection("users").doc(uid).get();
+      DocumentSnapshot _docSnapshot = await _firestore.collection("users").doc(uid).get();
       print("Above the document snapshot data");
       print(_docSnapshot.data());
       print("below the document snapshot data");
@@ -246,15 +242,23 @@ class OurDatabase {
   //   );
   // }
 
-  Future createOrder() {}
-
   Future getTrainers() async {
     // Get docs from collection reference
     QuerySnapshot querySnapshot = await _firestore.collection('trainer').get();
-
     // Get data from docs and convert map to List
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
     return allData;
+  }
+
+  Future getWorkoutList() async {
+    var a;
+    await _firestore
+        .collection('trainer')
+        .doc('N4kNM5BBVUpC96B25hB0')
+        .get()
+        .then((value) => a = value.get('workouts'));
+    print(a);
+    return a;
   }
 
   AddWorkout(Map workout) {

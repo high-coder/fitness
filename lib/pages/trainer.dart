@@ -57,21 +57,21 @@ class _TrainerState extends State<Trainer> {
                   children: [
                     Text(
                       widget.data['name'],
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 35, fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: 0,
                     ),
                     Text(
                       '2 min Exercises',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: 0,
                     ),
                     Text(
                       widget.data['desc'],
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
@@ -109,7 +109,7 @@ class _TrainerState extends State<Trainer> {
                           decoration: BoxDecoration(
                               color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
                               image: DecorationImage(
-                                  image: AssetImage('assets/green-leaves-2 (1).png'),
+                                  image: AssetImage('assets/rainbow.png'),
                                   fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(10)),
                           height: size.height * 0.25,

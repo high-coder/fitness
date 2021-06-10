@@ -77,11 +77,6 @@ class _NewWorkOutState extends State<NewWorkOut> {
   String _excerciseType = "Chest";
   String _excerciseName;
 
-  @override
-  void initState() {
-    // getExercises(2);
-    // TODO: implement initState
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -292,14 +287,22 @@ class _NewWorkOutState extends State<NewWorkOut> {
                 ),
                 TextButton(
                   onPressed: () => {
-                    ourDatabase.AddWorkout({
-                      'name': _workoutName.value.text,
-                      'desc': _workoutDesc.value.text,
-                      'exercises': exercises,
-                      'level': _level.value.text,
-                      'equipment': _equipment.value.text
-                    }),
+                    ourDatabase.getWorkoutList().then(
+                      (value) {
+                        ourDatabase.AddWorkout({
+                          'name': _workoutName.value.text,
+                          'desc': _workoutDesc.value.text,
+                          'exercises': exercises,
+                          'level': _level.value.text,
+                          'equipment': _equipment.value.text,
+                          'uid': value.length + 1,
+                        });
+
+                        return value;
+                      },
+                    ),
                     setState(() {
+                      exercises.clear();
                       _level.clear();
                       _equipment.clear();
                       _workoutName.clear();
@@ -360,6 +363,8 @@ class _NewWorkOutState extends State<NewWorkOut> {
     super.dispose();
     _rounds.dispose();
     _sets.dispose();
+    _equipment.dispose();
+    _level.dispose();
     _workoutName.dispose();
     _exerciseDesc.dispose();
     _workoutDesc.dispose();
