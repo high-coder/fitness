@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fitness_app/pages/trainer.dart';
 import 'package:fitness_app/services/database.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,7 @@ class _TrainerPageState extends State<TrainerPage> {
 
   @override
   Widget build(BuildContext context) {
-    database.afunction();
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -65,19 +67,23 @@ class _TrainerPageState extends State<TrainerPage> {
                 shrinkWrap: true,
                 itemCount: trainerList.length,
                 itemBuilder: (BuildContext context, int index) {
+                  if (trainerList[index]['workouts'].length == 0) {
+                    return Container();
+                  }
                   return GestureDetector(
                     onTap: () {
                       print(trainerList[index]);
+
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Trainer(data: trainerList[index])));
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 25),
+                      margin: EdgeInsets.only(top: 10, bottom: 10, right: 25, left: 25),
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
                           // image: DecorationImage(
                           //     image: AssetImage('assets/bub.png'), fit: BoxFit.cover),
-                          color: Color(0xb0891f90),
+                          color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
                           borderRadius: BorderRadius.circular(10)),
                       height: size.height * 0.25,
                       width: size.width * 0.8,
@@ -90,14 +96,9 @@ class _TrainerPageState extends State<TrainerPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                trainerList[index]['name'],
+                                trainerList[index]['fullName'],
                                 style: TextStyle(
                                     fontSize: 35, fontWeight: FontWeight.w600, color: Colors.white),
-                              ),
-                              Text(
-                                trainerList[index]['desc'],
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white, fontWeight: FontWeight.w600),
                               ),
                               SizedBox(
                                 height: 6,

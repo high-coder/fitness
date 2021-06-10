@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:fitness_app/models/trainer.dart';
+import 'package:fitness_app/providers/currentState.dart';
 import 'package:fitness_app/services/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NewWorkOut extends StatefulWidget {
   const NewWorkOut({Key key}) : super(key: key);
@@ -79,6 +81,8 @@ class _NewWorkOutState extends State<NewWorkOut> {
 
   @override
   Widget build(BuildContext context) {
+    CurrentState _instance = Provider.of<CurrentState>(context, listen: false);
+
     Size size = MediaQuery.of(context).size;
     String image;
     return Scaffold(
@@ -183,14 +187,14 @@ class _NewWorkOutState extends State<NewWorkOut> {
                         children: [
                           Expanded(
                               child: CustomTextField(
-                                  controller: _rounds,
-                                  name: 'repetition',
-                                  inputType: TextInputType.number)),
+                            controller: _rounds,
+                            name: 'repetition',
+                          )),
                           Expanded(
                               child: CustomTextField(
-                                  controller: _sets,
-                                  name: 'Sets',
-                                  inputType: TextInputType.number)),
+                            controller: _sets,
+                            name: 'Sets',
+                          )),
                         ],
                       ),
                       CustomTextField(controller: _exerciseDesc, name: 'Exercise Description'),
@@ -294,15 +298,16 @@ class _NewWorkOutState extends State<NewWorkOut> {
                 ),
                 TextButton(
                   onPressed: () => {
-                    ourDatabase.getWorkoutList().then(
+                    ourDatabase.getWorkoutList(_instance.currentUser.uid).then(
                       (value) {
-                        ourDatabase.AddWorkout({
+                        ourDatabase.AddWorkout(uid: _instance.currentUser.uid, workout: {
                           'name': _workoutName.value.text,
                           'desc': _workoutDesc.value.text,
                           'exercises': exercises,
                           'level': _level.value.text,
                           'equipment': _equipment.value.text,
-                          'uid': value.length + 1,
+                          'uid': value + 1,
+                          'price': ''
                         });
 
                         return value;
@@ -338,10 +343,10 @@ class _NewWorkOutState extends State<NewWorkOut> {
     );
   }
 
-  Container CustomTextField(
-      {TextEditingController controller,
-      String name,
-      TextInputType inputType = TextInputType.text}) {
+  Container CustomTextField({
+    TextEditingController controller,
+    String name,
+  }) {
     return Container(
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.only(left: 10, right: 30, top: 4),
@@ -354,7 +359,6 @@ class _NewWorkOutState extends State<NewWorkOut> {
             child: TextField(
               controller: controller,
               onChanged: (value) {},
-              keyboardType: inputType,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.play_for_work_sharp),
                   hintText: name,

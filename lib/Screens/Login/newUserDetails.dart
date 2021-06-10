@@ -119,7 +119,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         'fullName': _name.text,
                         'gender': gender,
                         'dob': selectedDate,
-                        'type': isUser ? 'users' : 'trainer'
+                        'type': isUser ? 'users' : 'trainer',
+                        'phone': _instance.currentUser.phone,
+                        'uid': _instance.currentUser.uid,
+                        'calories': _instance.currentUser.calories,
+                        'workouts': [],
+                        'purchasedCourses': [],
+                        'caloriesList': []
                       };
                       String ret = await _instance.saveNewUserData(user);
                       if (ret == "success") {

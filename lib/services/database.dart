@@ -24,11 +24,16 @@ class OurDatabase {
 
   Future<String> updateUserData(String uid, Map user) async {
     String retVal = "error";
-    try {
-      await _firestore.collection(user['type']).doc(uid).update(user);
-      retVal = "success";
-    } catch (e) {
-      print(e);
+    if (user['type'] == 'trainer') {
+      await _firestore.collection('users').doc(uid).delete();
+      await _firestore.collection('trainer').doc(uid).set(user);
+    } else {
+      try {
+        await _firestore.collection(user['type']).doc(uid).update(user);
+        retVal = "success";
+      } catch (e) {
+        print(e);
+      }
     }
 
     return retVal;
@@ -258,7 +263,8 @@ class OurDatabase {
     return allData;
   }
 
-  Future getWorkoutList() async {
+  Future getWorkoutList(String uid) async {
+    print('${uid} +++++++++++++++++++++++++++++++++++++++++');
     var a;
     await _firestore
         .collection('trainer')
@@ -266,14 +272,14 @@ class OurDatabase {
         .get()
         .then((value) => a = value.get('workouts'));
     print(a);
-    return a;
+    return a.length + 1;
   }
 
-  AddWorkout(Map workout) {
+  AddWorkout({Map workout, String uid}) {
+    print('${workout} +++++++++++++++++++++++++++++');
     _firestore.collection('trainer').doc('N4kNM5BBVUpC96B25hB0').update({
       'workouts': FieldValue.arrayUnion([workout])
     });
+    print(uid);
   }
-
-  afunction() {}
 }
