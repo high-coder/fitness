@@ -54,7 +54,7 @@ class OurUser{
       'dob':dob,
       'steps':steps,
       'calories':calories,
-      'localCourses':localCourses,
+      'workouts':localCourses,
       'purchasedCourses':purchasedCourses,
       'caloriesList':caloriesList
     };
@@ -74,7 +74,7 @@ class OurUser{
       dob: json['dob'] != null ? json['dob'].toDate() : json['dob'],
       steps: json['steps'],
       calories: json['calories'],
-      localCourses: json['localCourses'],
+      localCourses: json['workouts'],
       purchasedCourses: json["purchasedCourses"],
       caloriesList: json['caloriesList']
     );

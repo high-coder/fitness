@@ -24,9 +24,8 @@ class OurDatabase {
 
   Future<String> updateUserData(String uid, Map user) async {
     String retVal = "error";
-
     try {
-      await _firestore.collection("users").doc(uid).update(user);
+      await _firestore.collection(user['type']).doc(uid).update(user);
       retVal = "success";
     } catch (e) {
       print(e);
@@ -37,7 +36,6 @@ class OurDatabase {
 
   Future<OurUser> getUserInfo(String uid) async {
     OurUser retVal = OurUser();
-
     try {
       // this block is running fine
       DocumentSnapshot _docSnapshot = await _firestore.collection("users").doc(uid).get();
@@ -45,7 +43,17 @@ class OurDatabase {
       print(_docSnapshot.data());
       print("below the document snapshot data");
       //retVal(_docSnapshot.data()['name']);
-
+      _firestore.collection('users').doc(uid).get().then((value) => {
+            if (value.data() == null)
+              {
+                _firestore.collection('trainer').doc(uid).get().then((value) => {
+                      //Data
+                      _docSnapshot = value
+                    })
+              }
+            else
+              {_docSnapshot = value}
+          });
       retVal = retVal.toInstance(_docSnapshot.data());
       // retVal.uid = uid;
       // retVal.fullName = _docSnapshot.data()['name'];
@@ -266,4 +274,6 @@ class OurDatabase {
       'workouts': FieldValue.arrayUnion([workout])
     });
   }
+
+  afunction() {}
 }

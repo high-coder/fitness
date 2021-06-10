@@ -23,6 +23,7 @@ class _TrainerPageState extends State<TrainerPage> {
 
   @override
   Widget build(BuildContext context) {
+    database.afunction();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -74,8 +75,8 @@ class _TrainerPageState extends State<TrainerPage> {
                       margin: EdgeInsets.symmetric(horizontal: 25),
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/bub.png'), fit: BoxFit.cover),
+                          // image: DecorationImage(
+                          //     image: AssetImage('assets/bub.png'), fit: BoxFit.cover),
                           color: Color(0xb0891f90),
                           borderRadius: BorderRadius.circular(10)),
                       height: size.height * 0.25,

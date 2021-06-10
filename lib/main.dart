@@ -5,6 +5,7 @@ import 'package:fitness_app/pages/newWorkout.dart';
 import 'package:fitness_app/pages/nutrition.dart';
 import 'package:fitness_app/pages/trainersScreen.dart';
 import 'package:fitness_app/providers/currentState.dart';
+import 'package:fitness_app/services/loginChecker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
           //     Theme.of(context).textTheme,
           //   ),
           // ),
-          home: NewWorkOut()),
+          home: TrainerPage()),
     );
   }
 }

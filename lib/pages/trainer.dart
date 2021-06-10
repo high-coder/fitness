@@ -108,9 +108,9 @@ class _TrainerState extends State<Trainer> {
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
                               color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
-                              image: DecorationImage(
-                                  image: AssetImage('assets/rainbow.png'),
-                                  fit: BoxFit.cover),
+                              // image: DecorationImage(
+                              //     // image: AssetImage('assets/rainbow.png'),
+                              //     fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(10)),
                           height: size.height * 0.25,
                           width: size.width * 0.8,
