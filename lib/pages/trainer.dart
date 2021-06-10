@@ -45,7 +45,7 @@ class _TrainerState extends State<Trainer> {
                     color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
                     borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))),
                 child: Image.asset(
-                  'assets/yoga.png',
+                  'assets/workout.jpg',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -109,7 +109,8 @@ class _TrainerState extends State<Trainer> {
                           decoration: BoxDecoration(
                               color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
                               image: DecorationImage(
-                                  image: AssetImage('assets/yoga.png'), fit: BoxFit.cover),
+                                  image: AssetImage('assets/green-leaves-2 (1).png'),
+                                  fit: BoxFit.cover),
                               borderRadius: BorderRadius.circular(10)),
                           height: size.height * 0.25,
                           width: size.width * 0.8,
@@ -140,13 +141,18 @@ class _TrainerState extends State<Trainer> {
                                   ),
                                   Container(
                                     child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         RichText(
                                             text: TextSpan(children: [
                                           WidgetSpan(
                                               child: Container(
                                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                                  child: Icon(Icons.handyman))),
+                                                  child: Icon(
+                                                    Icons.whatshot,
+                                                    color: Colors.amber,
+                                                  ))),
                                           TextSpan(text: workouts[index]['equipment']),
                                         ])),
                                         RichText(
@@ -154,7 +160,10 @@ class _TrainerState extends State<Trainer> {
                                           WidgetSpan(
                                               child: Container(
                                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                                  child: Icon(Icons.handyman))),
+                                                  child: Icon(
+                                                    Icons.whatshot,
+                                                    color: Colors.amber,
+                                                  ))),
                                           TextSpan(text: workouts[index]['level']),
                                         ])),
                                         RichText(
@@ -162,7 +171,10 @@ class _TrainerState extends State<Trainer> {
                                           WidgetSpan(
                                               child: Container(
                                                   padding: EdgeInsets.symmetric(horizontal: 5),
-                                                  child: Icon(Icons.handyman))),
+                                                  child: Icon(
+                                                    Icons.whatshot,
+                                                    color: Colors.amber,
+                                                  ))),
                                           TextSpan(
                                             text: workouts[index]['exercises'] == null
                                                 ? '0 Workouts'
@@ -176,8 +188,15 @@ class _TrainerState extends State<Trainer> {
                               ),
                               TextButton(
                                 onPressed: null,
-                                child: Text('Buy'),
+                                child: Text(
+                                  'Buy',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 20),
+                                ),
                                 style: ButtonStyle(
+                                    elevation: MaterialStateProperty.all<double>(1.5),
                                     minimumSize: MaterialStateProperty.all<Size>(
                                         Size(size.width * 0.25, 20)),
                                     shape:

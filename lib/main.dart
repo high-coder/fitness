@@ -1,13 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fitness_app/Screens/Login/OurLogin.dart';
 import 'package:fitness_app/modelss/caloriesTrackerModel.dart';
 import 'package:fitness_app/modelss/stepsModel.dart';
-import 'package:fitness_app/pages/newWorkout.dart';
-import 'package:fitness_app/pages/nutrition.dart';
-import 'package:fitness_app/pages/trainer.dart';
 import 'package:fitness_app/pages/trainersScreen.dart';
 import 'package:fitness_app/providers/currentState.dart';
-import 'package:fitness_app/services/loginChecker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -52,7 +47,7 @@ class MyApp extends StatelessWidget {
           //     Theme.of(context).textTheme,
           //   ),
           // ),
-          home: Root()),
+          home: TrainerPage()),
     );
   }
 }

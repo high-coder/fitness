@@ -50,9 +50,7 @@ class _TrainerPageState extends State<TrainerPage> {
                     Text(
                       'Favorite Trainer',
                       style: TextStyle(
-                          color: Color(0xff363491),
-                          fontSize: 30,
-                          fontWeight: FontWeight.w800),
+                          color: Color(0xff363491), fontSize: 30, fontWeight: FontWeight.w800),
                     ),
                   ],
                 ),
@@ -70,17 +68,15 @@ class _TrainerPageState extends State<TrainerPage> {
                     onTap: () {
                       print(trainerList[index]);
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              Trainer(data: trainerList[index])));
+                          builder: (context) => Trainer(data: trainerList[index])));
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 25),
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                          color: Color(0xb0891f90),
                           image: DecorationImage(
-                              image: AssetImage('assets/yoga.png'),
-                              fit: BoxFit.cover),
+                              image: AssetImage('assets/bub.png'), fit: BoxFit.cover),
+                          color: Color(0xb0891f90),
                           borderRadius: BorderRadius.circular(10)),
                       height: size.height * 0.25,
                       width: size.width * 0.8,
@@ -95,16 +91,12 @@ class _TrainerPageState extends State<TrainerPage> {
                               Text(
                                 trainerList[index]['name'],
                                 style: TextStyle(
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
+                                    fontSize: 35, fontWeight: FontWeight.w600, color: Colors.white),
                               ),
                               Text(
                                 trainerList[index]['desc'],
                                 style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600),
+                                    fontSize: 20, color: Colors.white, fontWeight: FontWeight.w600),
                               ),
                               SizedBox(
                                 height: 6,
@@ -116,14 +108,19 @@ class _TrainerPageState extends State<TrainerPage> {
                                         text: TextSpan(children: [
                                       WidgetSpan(
                                           child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 5),
-                                              child: Icon(Icons.handyman))),
+                                              padding: EdgeInsets.symmetric(horizontal: 5),
+                                              child: Icon(
+                                                Icons.whatshot,
+                                                color: Colors.amber,
+                                              ))),
                                       TextSpan(
-                                        text: trainerList[index]['workouts'] ==
-                                                null
+                                        text: trainerList[index]['workouts'] == null
                                             ? '0 Workouts'
                                             : '${trainerList[index]['workouts'].length} Workouts',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600),
                                       ),
                                     ])),
                                   ],

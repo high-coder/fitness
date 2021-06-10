@@ -63,7 +63,6 @@ class _NutritionScreenState extends State<NutritionScreen> {
     Size size = MediaQuery.of(context).size;
 
     print(nutrition);
-
     // getNut('pau bhaji').then((value) => print(value));
     return Scaffold(
       body: SafeArea(
@@ -283,6 +282,9 @@ class _NutritionScreenState extends State<NutritionScreen> {
 
 
                 CustomTextField(controller: _controller, name: 'Enter Food'),
+                SizedBox(
+                  height: 6,
+                ),
                 TextButton(
                   onPressed: () => {
                     totalCals = 0,
