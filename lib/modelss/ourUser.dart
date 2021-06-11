@@ -1,4 +1,5 @@
 import 'package:fitness_app/modelss/caloriesTrackerModel.dart';
+import 'package:fitness_app/modelss/localCourseModel.dart';
 import 'package:fitness_app/modelss/stepsModel.dart';
 import 'package:hive/hive.dart';
 

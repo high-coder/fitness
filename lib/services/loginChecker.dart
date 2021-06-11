@@ -1,5 +1,6 @@
 import 'package:fitness_app/Screens/HomeScreen/homePage.dart';
 import 'package:fitness_app/Screens/Login/OurLogin.dart';
+import 'package:fitness_app/pages/newWorkout.dart';
 import 'package:fitness_app/providers/currentState.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

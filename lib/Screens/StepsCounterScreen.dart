@@ -87,10 +87,7 @@ class _StepsState extends State<Steps> {
                   ),
 
                   TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => BarChartSample3()));
-                      },
+
                       child: Text("History")),
 
                   Container(
@@ -132,7 +129,7 @@ class _StepsState extends State<Steps> {
                                   ),
                                 ),
                                 Text(
-                                  "Steps Today",
+                                  "Steps",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 28,

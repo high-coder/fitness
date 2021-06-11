@@ -1,3 +1,4 @@
+import 'package:fitness_app/Screens/profile/profileScreem.dart';
 import 'package:fitness_app/constants/MyTextStyle.dart';
 import 'package:fitness_app/constants/constants.dart';
 import 'package:fitness_app/pages/nutrition.dart';
@@ -61,6 +62,8 @@ class _OurHomeState extends State<OurHome> {
       case 2:
         return NutritionScreen();
         break;
+      case 3:
+        return UserProfile();
       // case 3:
       //   return SoldGoodScreen();
       //   break;

@@ -60,7 +60,7 @@ class _NutritionScreenState extends State<NutritionScreen> {
   Widget build(BuildContext context) {
     CurrentState _instance = Provider.of<CurrentState>(context, listen: false);
     print(_instance.currentUser.steps.length);
-    print(_instance.currentUser.caloriesList[0].caloriesData);
+    //print(_instance.currentUser.caloriesList[0].caloriesData);
     Size size = MediaQuery.of(context).size;
 
     print(nutrition);
@@ -114,21 +114,11 @@ class _NutritionScreenState extends State<NutritionScreen> {
                                       thicknessUnit: GaugeSizeUnit.factor,
                                     ),
                                     pointers: <GaugePointer>[
-                                      // RangePointer(
-                                      //     value: 10,
-                                      //     width: 0.04,
-                                      //     sizeUnit: GaugeSizeUnit.factor,
-                                      //     color: const Color.fromARGB(120, 0, 169, 181),
-                                      //     cornerStyle: CornerStyle.bothCurve),
                                       RangePointer(
                                           gradient: SweepGradient(
                                             endAngle: 50,
                                             startAngle: 50,
-                                            //center: AlignmentG,
-                                            //begin: Alignment.bottomLeft,
-                                            //end: Alignment.topCenter,
                                             colors: colors,
-                                            //stops: stops
                                           ),
                                           value: (totalCals / 2000 * 100).toDouble(),
                                           width: 0.03,
@@ -199,27 +189,23 @@ class _NutritionScreenState extends State<NutritionScreen> {
                         ],
                       ),
                     ),
-                    Positioned(
-                      top: 20,
-                      left: 4,
-                      right: 4,
-                      child: Container(
-                        child: Center(
-                          child: IconButton(
-                            onPressed: () {
-                              print("tioehr erohe eofrhe ");
-                              Navigator.push(
-                                  context, MaterialPageRoute(builder: (context) => Steps()));
-                            },
-                            icon: Icon(
-                              Icons.event,
-                              color: Colors.grey.withOpacity(0.4),
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Positioned(
+                    //   top: 20,
+                    //   left: 4,
+                    //   right: 4,
+                    //   child: Container(
+                    //     child: Center(
+                    //       child: IconButton(
+                    //
+                    //         icon: Icon(
+                    //           Icons.event,
+                    //           color: Colors.grey.withOpacity(0.4),
+                    //           size: 30,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
 

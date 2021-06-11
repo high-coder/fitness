@@ -48,7 +48,8 @@ class _NewWorkOutState extends State<NewWorkOut> {
                       if (value['name'] != null)
                         {
                           exercisesName.add(value['name']),
-                          ExcerciseData.add({'name': value['name'], 'id': value['id']})
+                          ExcerciseData.add(
+                              {'name': value['name'], 'id': value['id']})
                         }
                     });
               }),
@@ -59,8 +60,9 @@ class _NewWorkOutState extends State<NewWorkOut> {
     String url = '';
     await dio
         .get('https://wger.de/api/v2/exerciseimage/${id}/thumbnails/',
-            options: Options(
-                headers: {'Authorization': 'Token 6fbc6ff0545fda8832cffb2afd4c26efdc6599d8'}))
+            options: Options(headers: {
+              'Authorization': 'Token 6fbc6ff0545fda8832cffb2afd4c26efdc6599d8'
+            }))
         .then((value) => {
               if (value.data.length != 0) {url = value.data['medium']['url']}
             });
@@ -84,7 +86,6 @@ class _NewWorkOutState extends State<NewWorkOut> {
   @override
   Widget build(BuildContext context) {
     CurrentState _instance = Provider.of<CurrentState>(context, listen: false);
-
     Size size = MediaQuery.of(context).size;
     String image;
     return Scaffold(
@@ -105,16 +106,29 @@ class _NewWorkOutState extends State<NewWorkOut> {
                   ),
                 ),
                 CustomTextField(controller: _workoutName, name: 'WorkOut Name'),
-                CustomTextField(controller: _workoutDesc, name: 'WorkOut Description'),
+                CustomTextField(
+                    controller: _workoutDesc, name: 'WorkOut Description'),
                 CustomTextField(controller: _equipment, name: 'Equipment'),
-                Row(
-                  children: [
-                    Expanded(child: CustomTextField(controller: _price, name: 'Price')),
-                    Expanded(child: CustomTextField(controller: _level, name: 'Level')),
-                  ],
+                Visibility(
+                  visible:
+                      _instance.currentUser.type == "trainer" ? true : false,
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: CustomTextField(
+                        controller: _price,
+                        name: 'Price',
+                        keyboardType: TextInputType.phone,
+                      )),
+                      Expanded(
+                          child: CustomTextField(
+                              controller: _level, name: 'Level')),
+                    ],
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 40, right: 40, top: 20, bottom: 20),
+                  padding: const EdgeInsets.only(
+                      left: 40, right: 40, top: 20, bottom: 20),
                   child: Text(
                     'Exercises',
                     style: TextStyle(fontWeight: FontWeight.w800, fontSize: 25),
@@ -125,11 +139,13 @@ class _NewWorkOutState extends State<NewWorkOut> {
                     children: [
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 20),
-                        padding: EdgeInsets.only(top: 2, bottom: 2, right: 20, left: 20),
+                        padding: EdgeInsets.only(
+                            top: 2, bottom: 2, right: 20, left: 20),
                         decoration: BoxDecoration(
                           // color: Colors.teal,
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.black12, style: BorderStyle.solid),
+                          border: Border.all(
+                              color: Colors.black12, style: BorderStyle.solid),
                         ),
                         width: size.width,
                         child: DropdownButtonHideUnderline(
@@ -166,10 +182,12 @@ class _NewWorkOutState extends State<NewWorkOut> {
                       ),
                       Container(
                         margin: EdgeInsets.all(20),
-                        padding: EdgeInsets.only(top: 2, bottom: 2, right: 20, left: 20),
+                        padding: EdgeInsets.only(
+                            top: 2, bottom: 2, right: 20, left: 20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.black12, style: BorderStyle.solid),
+                          border: Border.all(
+                              color: Colors.black12, style: BorderStyle.solid),
                         ),
                         width: size.width,
                         child: DropdownButtonHideUnderline(
@@ -177,7 +195,8 @@ class _NewWorkOutState extends State<NewWorkOut> {
                             value: _excerciseName,
                             items: exercisesName.length == 0
                                 ? []
-                                : exercisesName.map<DropdownMenuItem<String>>((String value) {
+                                : exercisesName.map<DropdownMenuItem<String>>(
+                                    (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Text(value),
@@ -197,15 +216,19 @@ class _NewWorkOutState extends State<NewWorkOut> {
                               child: CustomTextField(
                             controller: _rounds,
                             name: 'repetition',
+                            keyboardType: TextInputType.phone,
                           )),
                           Expanded(
                               child: CustomTextField(
                             controller: _sets,
                             name: 'Sets',
+                            keyboardType: TextInputType.phone,
                           )),
                         ],
                       ),
-                      CustomTextField(controller: _exerciseDesc, name: 'Exercise Description'),
+                      CustomTextField(
+                          controller: _exerciseDesc,
+                          name: 'Exercise Description'),
                       SizedBox(
                         height: 10,
                       ),
@@ -219,7 +242,8 @@ class _NewWorkOutState extends State<NewWorkOut> {
                                 if (element['name'] == _excerciseName) {
                                   print(_excerciseName);
                                   print(element['id']);
-                                  getImage(element['id']).then((value) => image = value);
+                                  getImage(element['id'])
+                                      .then((value) => image = value);
                                 }
                               }),
                               setState(() {
@@ -241,7 +265,8 @@ class _NewWorkOutState extends State<NewWorkOut> {
                             }
                           else
                             {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
                                 content: const Text('Some field are missing'),
                                 duration: const Duration(seconds: 1),
                                 action: SnackBarAction(
@@ -254,13 +279,17 @@ class _NewWorkOutState extends State<NewWorkOut> {
                         child: Text(
                           'Add',
                           style: TextStyle(
-                              color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800),
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800),
                         ),
                         style: ButtonStyle(
-                            minimumSize:
-                                MaterialStateProperty.all<Size>(Size(size.width * 0.7, 35)),
-                            shape: MaterialStateProperty.all<StadiumBorder>(StadiumBorder()),
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent)),
+                            minimumSize: MaterialStateProperty.all<Size>(
+                                Size(size.width * 0.7, 35)),
+                            shape: MaterialStateProperty.all<StadiumBorder>(
+                                StadiumBorder()),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.blueAccent)),
                       )
                     ],
                   ),
@@ -278,7 +307,8 @@ class _NewWorkOutState extends State<NewWorkOut> {
                         margin: EdgeInsets.all(25),
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                            color: Colors.primaries[
+                                Random().nextInt(Colors.primaries.length)],
                             borderRadius: BorderRadius.circular(10)),
                         height: size.height * 0.2,
                         width: size.width * 0.8,
@@ -292,26 +322,37 @@ class _NewWorkOutState extends State<NewWorkOut> {
                               children: [
                                 Text(
                                   exercises[index]['name'],
-                                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w600),
                                 ),
                                 Text(
                                   exercises[index]['type'],
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
                                 ),
                                 Text(
                                   exercises[index]['desc'],
-                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600),
                                 ),
                                 Text(
                                   'repetition ${exercises[index]['repetition']} | Sets ${exercises[index]['set']}',
-                                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),
                             if (exercises[index]['image'] == null)
-                              Expanded(child: Image.asset('assets/equipment.png'))
+                              Expanded(
+                                  child: Image.asset('assets/equipment.png'))
                             else
-                              Expanded(child: Image.network(exercises[index]['image'])),
+                              Expanded(
+                                  child:
+                                      Image.network(exercises[index]['image'])),
                           ],
                         ),
                       );
@@ -320,30 +361,66 @@ class _NewWorkOutState extends State<NewWorkOut> {
                   height: 10,
                 ),
                 TextButton(
-                  onPressed: () => {
-                    if (_price.value.text != '' &&
-                        _workoutName.value.text != '' &&
+                  onPressed: () {
+                    if (_workoutName.value.text != '' &&
                         _equipment.value.text != '' &&
-                        _level.value.text != '' &&
-                        _sets.value.text != '' &&
-                        _workoutDesc.value.text != '')
-                      {
-                        print(_price.value.text),
-                        ourDatabase.getWorkoutList(_instance.currentUser.uid).then(
+                        _workoutDesc.value.text != '' &&
+                        exercises.isNotEmpty) {
+                      if (_instance.currentUser.type == "trainer") {
+                        print(_price.value.text);
+                        List newEx = List.from(exercises);
+                        ourDatabase
+                            .getWorkoutList(_instance.currentUser.uid)
+                            .then(
                           (value) {
-                            ourDatabase.AddWorkout(uid: _instance.currentUser.uid, workout: {
-                              'name': _workoutName.value.text,
-                              'desc': _workoutDesc.value.text,
-                              'exercises': exercises,
-                              'level': _level.value.text,
-                              'equipment': _equipment.value.text,
-                              'uid': value + 1,
-                              'price': _price.value.text
-                            });
+                            String name = _workoutName.text;
+                            String desc = _workoutDesc.text;
+                            String level = _level.text;
+                            String equ = _equipment.text;
+                            String price = _price.text;
+                            ourDatabase.AddWorkout(
+                                uid: _instance.currentUser.uid,
+                                workout: {
+                                  'name': name,
+                                  'desc': desc,
+                                  'exercises': newEx,
+                                  'level': level,
+                                  'equipment': equ,
+                                  'uid': value + 1,
+                                  'price': price
+                                });
 
                             return value;
                           },
-                        ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: const Text('workout saved successfully'),
+                          duration: const Duration(seconds: 1),
+                          backgroundColor: Colors.primaries[
+                              Random().nextInt(Colors.primaries.length)],
+                          action: SnackBarAction(
+                            label: '',
+                            onPressed: () {},
+                          ),
+                        ));
+                        _instance.saveWorkoutsLocally({
+                          'name': _workoutName.value.text,
+                          'desc': _workoutDesc.value.text,
+                          'level': _level.value.text,
+                          'equipment': _equipment.value.text,
+                          'uid': "45",
+                          'price': _price.value.text
+                        }, exercises);
+                        Navigator.of(context).pop();
+                      } else {
+                        _instance.saveWorkoutsLocally({
+                          'name': _workoutName.value.text,
+                          'desc': _workoutDesc.value.text,
+                          'level': _level.value.text,
+                          'equipment': _equipment.value.text,
+                          'uid': "45",
+                          'price': _price.value.text
+                        }, exercises);
                         setState(() {
                           exercises.clear();
                           _level.clear();
@@ -352,31 +429,47 @@ class _NewWorkOutState extends State<NewWorkOut> {
                           _workoutDesc.clear();
                           _price.clear();
                           exercises.clear();
-                        })
-                      }
-                    else
-                      {
+                        });
+
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: const Text('Some fields are missing'),
+                          content: const Text('workout saved successfully'),
                           duration: const Duration(seconds: 1),
-                          backgroundColor:
-                              Colors.primaries[Random().nextInt(Colors.primaries.length)],
+                          backgroundColor: Colors.primaries[
+                              Random().nextInt(Colors.primaries.length)],
                           action: SnackBarAction(
                             label: '',
                             onPressed: () {},
                           ),
-                        ))
-                      },
+                        ));
+                      }
+                    } else {
+                      print(exercises.length);
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: const Text('Some fields are missing'),
+                        duration: const Duration(seconds: 1),
+                        backgroundColor: Colors.primaries[
+                            Random().nextInt(Colors.primaries.length)],
+                        action: SnackBarAction(
+                          label: '',
+                          onPressed: () {},
+                        ),
+                      ));
+                    }
                   },
                   child: Text(
                     'Submit',
-                    style:
-                        TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w800),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800),
                   ),
                   style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all<Size>(Size(size.width * 0.7, 35)),
-                      shape: MaterialStateProperty.all<StadiumBorder>(StadiumBorder()),
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blueAccent)),
+                      minimumSize: MaterialStateProperty.all<Size>(
+                          Size(size.width * 0.7, 35)),
+                      shape: MaterialStateProperty.all<StadiumBorder>(
+                          StadiumBorder()),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blueAccent)),
                 ),
                 SizedBox(
                   height: 20,
@@ -392,6 +485,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
   Container CustomTextField({
     TextEditingController controller,
     String name,
+    keyboardType: TextInputType.name,
   }) {
     return Container(
       margin: EdgeInsets.all(10),
@@ -403,6 +497,7 @@ class _NewWorkOutState extends State<NewWorkOut> {
         children: [
           Expanded(
             child: TextField(
+              keyboardType: keyboardType,
               controller: controller,
               onChanged: (value) {},
               decoration: InputDecoration(
@@ -410,7 +505,8 @@ class _NewWorkOutState extends State<NewWorkOut> {
                   hintText: name,
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
-                  hintStyle: TextStyle(fontSize: 16, color: Colors.grey.shade400)),
+                  hintStyle:
+                      TextStyle(fontSize: 16, color: Colors.grey.shade400)),
             ),
           ),
         ],

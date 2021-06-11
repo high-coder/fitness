@@ -4,8 +4,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class WorkoutPage extends StatefulWidget {
-  const WorkoutPage({Key key, this.data}) : super(key: key);
+  const WorkoutPage({Key key, this.data, this.which}) : super(key: key);
   final data;
+  final String which;
 
   @override
   _WorkoutPageState createState() => _WorkoutPageState();
@@ -17,9 +18,14 @@ class _WorkoutPageState extends State<WorkoutPage> {
   @override
   Widget build(BuildContext context) {
     int val = random.nextInt(555);
-    print(val);
-    print(widget.data['exercises']);
-    List exercise = widget.data['exercises'];
+List exercise;
+    if(widget.which == "local") {
+       exercise = widget.data;
+
+    } else{
+       exercise = widget.data['exercises'];
+
+    }
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -79,7 +85,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                       decoration: BoxDecoration(
                           color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
                           borderRadius: BorderRadius.circular(10)),
-                      height: size.height * 0.2,
+                      height: size.height * 0.2 + 40,
                       width: size.width * 0.8,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,

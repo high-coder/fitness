@@ -25,7 +25,7 @@ class _MyHomeDefaultState extends State<MyHomeDefault> {
     super.initState();
 
     CurrentState _instance = Provider.of<CurrentState>(context, listen: false);
-    _instance.currentUser.caloriesList.length == 2
+    _instance.currentUser.caloriesList.length >= 2
         ? _instance.currentUser.caloriesList[1].caloriesData.forEach((element) {
             totalcal += element['cal'];
           })
@@ -35,6 +35,9 @@ class _MyHomeDefaultState extends State<MyHomeDefault> {
   @override
   Widget build(BuildContext context) {
     CurrentState _instance = Provider.of<CurrentState>(context, listen: false);
+    print(_instance.currentUser.name);
+    print(_instance.currentUser.type);
+//_instance.save();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color(0xfffff2e2),
@@ -98,119 +101,129 @@ class _MyHomeDefaultState extends State<MyHomeDefault> {
               Center(
                 child: Stack(
                   children: [
-                    Column(
-                      children: [
-                        Consumer<CurrentState>(
-                          builder: (context, _, __) {
-                            return Container(
-                              height: 250,
-                              width: 250,
-                              child: SfRadialGauge(axes: <RadialAxis>[
-                                RadialAxis(
-                                  minimum: 0,
-                                  maximum: 100,
-                                  showLabels: false,
-                                  showTicks: false,
-                                  axisLineStyle: AxisLineStyle(
-                                    thickness: 0.08,
-                                    cornerStyle: CornerStyle.bothCurve,
-                                    color: Color.fromARGB(30, 0, 169, 181),
-                                    thicknessUnit: GaugeSizeUnit.factor,
-                                  ),
-                                  pointers: <GaugePointer>[
-                                    // RangePointer(
-                                    //     value: 10,
-                                    //     width: 0.04,
-                                    //     sizeUnit: GaugeSizeUnit.factor,
-                                    //     color: const Color.fromARGB(120, 0, 169, 181),
-                                    //     cornerStyle: CornerStyle.bothCurve),
-                                    RangePointer(
-                                        gradient: SweepGradient(
-                                          endAngle: 50,
-                                          startAngle: 50,
+                    Container(width: size.width,),
+                    Center(
+                      child: Container(
+                        height: 250,
+                        width: 250,
+                        decoration: BoxDecoration(
+                          //color: Color(0xffE2E2F3),
+                          borderRadius: BorderRadius.circular(300),
+                          //  gradient: LinearGradient(colors: [Color(0xffE2E2F3)]),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.white24,
+                              spreadRadius: 10,
+                              blurRadius: 10,
+                              offset: Offset(0, 7), // changes position of shadow
+                            ),
+                          ],
+                        ),),),
 
-                                          //center: AlignmentG,
-                                          //begin: Alignment.bottomLeft,
-                                          //end: Alignment.topCenter,
-                                          colors: colors,
-                                          //stops: stops
-                                        ),
-                                        value: _instance.currentUser.steps.isNotEmpty
-                                            ? (_instance.currentUser.steps[0].steps / 10000 * 100)
-                                                .toDouble()
-                                            : 1.00,
-                                        width: 0.08,
-                                        sizeUnit: GaugeSizeUnit.factor,
-                                        enableAnimation: true,
-                                        animationDuration: 100,
-                                        animationType: AnimationType.linear),
-                                  ],
-                                  annotations: <GaugeAnnotation>[
-                                    GaugeAnnotation(
-                                        widget: Container(
-                                            child: Text(
-                                          '${_instance.steps}',
-                                          style: GoogleFonts.darkerGrotesque(
-                                            fontSize: 20,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
+                    Center(
+                      child: Column(
+                        children: [
+                          Consumer<CurrentState>(
+                            builder: (context, _, __) {
+                              return Container(
+                                height: 250,
+                                width: 250,
+                                child: SfRadialGauge(axes: <RadialAxis>[
+                                  RadialAxis(
+                                    minimum: 0,
+                                    maximum: 100,
+                                    showLabels: false,
+                                    showTicks: false,
+                                    axisLineStyle: AxisLineStyle(
+                                      thickness: 0.08,
+                                      cornerStyle: CornerStyle.bothCurve,
+                                      color: Color.fromARGB(30, 0, 169, 181),
+                                      thicknessUnit: GaugeSizeUnit.factor,
+                                    ),
+                                    pointers: <GaugePointer>[
+                                      RangePointer(
+                                          gradient: SweepGradient(
+                                            endAngle: 50,
+                                            startAngle: 50,
+                                            colors: colors,
                                           ),
-                                        )),
-                                        angle: 90,
-                                        positionFactor: 0.0),
-                                    GaugeAnnotation(
-                                        widget: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  child: Text(
-                                                    "Goal",
-                                                    style: TextStyle(
-                                                        color: Colors.black45,
-                                                        fontWeight: FontWeight.w800,
-                                                        fontSize: 30),
+                                          value: _instance.currentUser.steps.isNotEmpty
+                                              ? (_instance.currentUser.steps[0].steps / 10000 * 100)
+                                                  .toDouble()
+                                              : 1.00,
+                                          width: 0.08,
+                                          sizeUnit: GaugeSizeUnit.factor,
+                                          enableAnimation: true,
+                                          animationDuration: 100,
+                                          animationType: AnimationType.linear),
+                                    ],
+                                    annotations: <GaugeAnnotation>[
+                                      GaugeAnnotation(
+                                          widget: Container(
+                                              child: Text(
+                                            '${_instance.steps}',
+                                            style: GoogleFonts.darkerGrotesque(
+                                              fontSize: 60,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          )),
+                                          angle: 90,
+                                          positionFactor: 0.0),
+                                      GaugeAnnotation(
+                                          widget: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    child: Text(
+                                                      "Goal",
+                                                      style: TextStyle(
+                                                          color: Colors.black45,
+                                                          fontWeight: FontWeight.w800,
+                                                          fontSize: 30),
+                                                    ),
                                                   ),
-                                                ),
-                                                Container(
-                                                  child: Text(
-                                                    "10000",
-                                                    style: MyTextStyle.buttontext2,
-                                                  ),
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      _instance.currentUser.steps.isNotEmpty
-                                                          ? _instance.currentUser.steps[0].calories
-                                                              .toStringAsFixed(2)
-                                                          : " ",
+                                                  Container(
+                                                    child: Text(
+                                                      "10000",
                                                       style: MyTextStyle.buttontext2,
                                                     ),
-                                                    Image.asset(
-                                                      "assets/calories.png",
-                                                      width: 20,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        angle: 90,
-                                        positionFactor: 0.8),
-                                  ],
-                                )
-                              ]),
-                            );
-                          },
-                          //child: ,
-                        ),
-                      ],
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        _instance.currentUser.steps.isNotEmpty
+                                                            ? _instance.currentUser.steps[0].calories
+                                                                .toStringAsFixed(2)
+                                                            : " ",
+                                                        style: MyTextStyle.buttontext2,
+                                                      ),
+                                                      Image.asset(
+                                                        "assets/calories.png",
+                                                        width: 20,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          angle: 90,
+                                          positionFactor: 0.8),
+                                    ],
+                                  )
+                                ]),
+                              );
+                            },
+                            //child: ,
+                          ),
+                        ],
+                      ),
                     ),
                     Positioned(
                       top: 20,
@@ -251,7 +264,7 @@ class _MyHomeDefaultState extends State<MyHomeDefault> {
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.only(top: 30, left: 20, right: 10),
-                      height: size.height * 0.22,
+                      height: size.height * 0.22 + 17,
                       width: size.width / 2,
                       decoration: BoxDecoration(
                           color: Color(0xff222222),
@@ -272,17 +285,30 @@ class _MyHomeDefaultState extends State<MyHomeDefault> {
                                   letterSpacing: 2),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: LinearProgressIndicator(
-                              backgroundColor: Color(0xfffff2e2),
-                              value: 0.5,
-                            ),
-                          ),
+                          Builder(
+                            builder: (BuildContext contex) {
+                              double value = 0;
+                              if(_instance.currentUser.steps.length >= 2) {
+                                int totalSteps = _instance.currentUser.steps[1].steps;
+                                value = totalSteps / 10000;
+                                if(value>1) {
+                                  value = 1;
+                                }
+                              }
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: LinearProgressIndicator(
+                                  backgroundColor: Color(0xfffff2e2),
+                                  value: value,
+                                ),
+                              );
+                            },
+                          )
+                          ,
                           Padding(
                             padding: const EdgeInsets.only(top: 8, left: 16),
                             child: Text(
-                              'Total Steps ${_instance.currentUser.steps.length == 0 ? '0' : _instance.currentUser.steps[1].steps}',
+                              'Total Steps ${_instance.currentUser.steps.length <= 1 ? '0' : _instance.currentUser.steps[1].steps}',
                               style: TextStyle(
                                   color: Color(0xfffff2e2),
                                   fontSize: 20,
@@ -297,7 +323,7 @@ class _MyHomeDefaultState extends State<MyHomeDefault> {
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.only(top: 30, left: 20, right: 10),
-                      height: size.height * 0.22,
+                      height: size.height * 0.22  + 17,
                       width: size.width / 2,
                       decoration: BoxDecoration(
                           color: Color(0xfffec775),
@@ -313,15 +339,31 @@ class _MyHomeDefaultState extends State<MyHomeDefault> {
                               'Yesterday Calories',
                               style: TextStyle(
                                   fontSize: 23, fontWeight: FontWeight.w800, letterSpacing: 2),
+
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: LinearProgressIndicator(
-                              backgroundColor: Colors.black45,
-                              value: 0.5,
-                            ),
+
+
+                          Builder(
+                            builder: (BuildContext contex) {
+                              double value = 0;
+                              if(_instance.currentUser.caloriesList.length >= 2) {
+                                value = totalcal / 2000;
+                                if(value > 1) {
+                                  value = 1;
+                                }
+                              }
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                child: LinearProgressIndicator(
+                                  backgroundColor: Colors.black45,
+                                  value: value,
+                                ),
+                              );
+                            },
                           ),
+
+
                           Padding(
                             padding: const EdgeInsets.only(top: 8, left: 16),
                             child: Text(
@@ -335,7 +377,8 @@ class _MyHomeDefaultState extends State<MyHomeDefault> {
                     ),
                   ),
                 ],
-              )
+              ),
+              //SizedBox(height: 20,),
             ],
           ),
         ),

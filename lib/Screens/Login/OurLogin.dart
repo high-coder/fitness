@@ -79,7 +79,7 @@ class OurLogin extends StatelessWidget {
                         ),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "We provide mechanical and repairing services to people which they can access from anywhere and anytime.",
+                          "Our app lets you track your steps, calories, purchase plans from trainers and a lot more",
                           style: MyTextStyle.text10,
                         ),
                       ),
@@ -118,50 +118,6 @@ class OurLogin extends StatelessWidget {
                           );
                         },
                         //child: ,
-                      ),
-                      Consumer<CurrentState>(
-                        builder:(context, _, Widget child) {
-                          return GestureDetector(
-                            onTap: () {
-                              print("The button is not disable");
-                              //Navigator.pushNamed(context, "/verify");
-                              //_instance.loginUserWithGoogle();
-                            },
-                            child: Container(
-                              height: _height / 15,
-                              width: double.infinity,
-                              margin: EdgeInsets.only(top: 20.0),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(5.0),
-                                ),
-                                color:  MyColors.shopButton,
-                              ),
-                              child: child,
-                            ),
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          // crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left:20.0),
-                              child: Text(
-                                "Sign in with google",
-                                style: MyTextStyle.shopButton2,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 20.0),
-                              child: Icon(
-                                Icons.arrow_forward_sharp,
-                                color: MyColors.yellowish,
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                       Consumer<CurrentState>(
                         builder:(context, _, Widget child) {

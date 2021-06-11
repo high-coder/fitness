@@ -7,6 +7,7 @@ import 'package:fitness_app/Screens/Login/newUserDetails.dart';
 import 'package:fitness_app/Screens/Login/verification.dart';
 import 'package:fitness_app/constants/MyColors.dart';
 import 'package:fitness_app/modelss/caloriesTrackerModel.dart';
+import 'package:fitness_app/modelss/localCourseModel.dart';
 import 'package:fitness_app/modelss/ourUser.dart';
 import 'package:fitness_app/modelss/stepsModel.dart';
 import 'package:fitness_app/services/database.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class CurrentState extends ChangeNotifier{
   Color customColor = MyColors.pureblack;
@@ -186,6 +188,7 @@ class CurrentState extends ChangeNotifier{
       _retVal = "success";
       currentUser.gender = user["gender"];
       currentUser.name = user["fullName"];
+      currentUser.type = user["type"];
       currentUser.dob = user["dob"];
       UserData.put("user", currentUser);
 
@@ -198,7 +201,10 @@ class CurrentState extends ChangeNotifier{
     notifyListeners();
     return _retVal;
   }
+  save() {
+    UserData.put("user", currentUser);
 
+  }
   /// ----------------------- beginning the code for the pedometer over here now -----------------
   // Pedometer _pedometer;
   // StreamSubscription<int> _subscription;
@@ -371,7 +377,7 @@ class CurrentState extends ChangeNotifier{
   void onStepCountError(error) {
     print('onStepCountError: $error');
     //setState(() {
-      steps = 'Step Count not available';
+      steps = '?';
     //});
   }
 
@@ -387,18 +393,21 @@ class CurrentState extends ChangeNotifier{
 
     //if (!mounted) return;
   }
-  Future<String> onStartApi() async {
 
+  Future<String> onStartApi() async {
+    initializeRazorPay();
 
     String _retVal = "error";
     UserData = await Hive.openBox("userData");
 
     try {
       currentUser =  UserData.get("user");
+        //currentUser.localCourses = [];
 
-
+      //print(currentUser.localCourses[0].exercises);
       // print(currentUser.name);
       print(currentUser.name);
+      //currentUser.localCourses = [];
       if (currentUser.name != null) {
         _retVal = "success";
       }
@@ -441,4 +450,126 @@ class CurrentState extends ChangeNotifier{
     }
     UserData.put("user", currentUser);
   }
+
+  saveWorkoutsLocally(Map data, List exercises) {
+    print(data);
+    print(exercises);
+    List newExercises = List.from(exercises);
+    data["exercises"] = newExercises;
+
+        print("i am caleld");
+    if(currentUser.localCourses!= null) {
+      currentUser.localCourses.add(data);
+    }
+
+    print(currentUser.localCourses.length);
+    print(currentUser.localCourses);
+    UserData.put("user", currentUser);
+
+
+    print(currentUser.localCourses[0]);
+  }
+
+
+  /// ---------------------------- ADDING THE RAZOR PAY CODE OVER HERE -------------------///
+  double amountToBeCharged = 0;
+  var options;
+  Razorpay _razorpay = Razorpay();
+
+
+  initializeRazorPay() {
+
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+
+
+    options  = {
+      'key': 'rzp_test_f9x193VDeXEfQ7',
+      'amount': amountToBeCharged *100, //in the smallest currency sub-unit.
+      'name': 'Health and Fitness',
+      'description': 'Paid trainer plan',
+      //'timeout': 600, // in seconds
+      'prefill': {
+        'contact': '',
+        'email': ''
+      },
+      'external': {
+        'wallets':["paytm"]
+      }
+    };
+  }
+
+
+  String trainerUID = "";
+  String workoutUID = "";
+  void openCheckout(Map<String,dynamic> options) async {
+    // var options = {
+    //   'key': 'rzp_test_f9x193VDeXEfQ7',
+    //   'amount': 100,
+    //   'name': 'Paradice',
+    //   'description': 'Payment',
+    //   'prefill': {'contact': '', 'email': ''},
+    //   'external': {
+    //     'wallets': ['paytm']
+    //   }
+    // };
+
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      print("Inside the catch method over here");
+      debugPrint(e.toString());
+    }
+  }
+
+  String paymentSuccess = "";
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async{
+    // Do something when payment succeeds
+
+    //currentUserDetails.currentDetails["EducationToken"] += 12;
+    if(currentUser.purchasedCourses != null) {
+
+      bool same = false;
+      currentUser.purchasedCourses.forEach((element) {
+        if(element["trainerUID"] == trainerUID) {
+          same = true;
+          if(element["workoutUID"] != workoutUID) {
+            element["workoutUID"].add(workoutUID);
+          }
+        }
+      });
+
+      if(same == false) {
+        currentUser.purchasedCourses.insert(0, {
+          "trainerUID":trainerUID,
+          "workoutUID":[workoutUID],
+        });
+      }
+
+    }
+    else {
+      currentUser.purchasedCourses = [];
+      currentUser.purchasedCourses.insert(0, {
+        "trainerUID":trainerUID,
+        "workoutUID":workoutUID,
+      });
+    }
+    print("Saving all the data of the user now ");
+    UserData.put("user", currentUser);
+    notifyListeners();
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet is selected
+
+  }
+
+
+
+   /// ------------------ END Of razor pay code -------------------------
 }
